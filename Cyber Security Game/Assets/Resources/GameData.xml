@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<game_data>
+	<attack_vectors>
+		<!-- Default Attack Vectors -->
+		<attack_vector>
+			<to>Electorate</to>
+			<from>Online Trolls</from>
+			<enabled>True</enabled>
+		</attack_vector>
+		<attack_vector>
+			<to>UK PLC</to>
+			<from>Energetic Bear</from>
+			<enabled>True</enabled>
+		</attack_vector>
+		<!-- Black Market Attack Vectors -->
+		<attack_vector>
+			<to>Rosenergoatom</to>
+			<from>GCHQ</from>
+			<enabled>False</enabled>
+		</attack_vector>
+		<attack_vector>
+			<to>UK Energy</to>
+			<from>SCS</from>
+			<enabled>False</enabled>
+		</attack_vector>
+		<attack_vector>
+			<to>Russian Government</to>
+			<from>UK Government</from>
+			<enabled>False</enabled>
+		</attack_vector>
+	</attack_vectors>
+	<resource_routes>
+		<!-- UK Resource Routes -->
+		<resource_route two_way ="False">
+			<to>UK PLC</to>
+			<from>Electorate</from>
+		</resource_route>
+		<resource_route two_way ="False">
+			<to>GCHQ</to>
+			<from>UK PLC</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>UK PLC</to>
+			<from>UK Government</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>UK Government</to>
+			<from>Electorate</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>UK Energy</to>
+			<from>Electorate</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>UK Energy</to>
+			<from>UK Government</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>UK Government</to>
+			<from>GCHQ</from>
+		</resource_route>
+		<!-- Russian Resource Routes -->
+		<resource_route two_way ="False">
+			<to>Energetic Bear</to>
+			<from>SCS</from>
+		</resource_route>
+		<resource_route two_way ="False">
+			<to>Online Trolls</to>
+			<from>Russian Government</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>Energetic Bear</to>
+			<from>Russian Government</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>Russian Government</to>
+			<from>SCS</from>
+		</resource_route>
+		<resource_route two_way ="True">
+			<to>Rosenergoatom</to>
+			<from>Government</from>
+		</resource_route>
+	</resource_routes>
+</game_data>

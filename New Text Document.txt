@@ -1,0 +1,53 @@
+	<entities>
+		<!-- Uk Government -->
+		<!-- GCHQ -->
+		<!-- Uk Energy -->
+		<!-- Uk PLC -->
+		<!-- Electorate -->
+		<entity>
+			<name>UK Government</name>
+			<country>UK</country>
+		</entity>
+		<entity>
+			<name>GCHQ</name>
+			<country>UK</country>
+		</entity>
+		<entity>
+			<name>UK Energy</name>
+			<country>UK</country>
+		</entity>
+		<entity>
+			<name>UK PLC</name>
+			<country>UK</country>
+		</entity>
+		<entity>
+			<name>Electorate</name>
+			<country>UK</country>
+		</entity>
+	
+		<!-- Russia Government -->
+		<!-- Rosenergoatom -->
+		<!-- SCS -->
+		<!-- Online Trolls -->
+		<!-- Energetic Bear -->
+		<entity>
+			<name>Russian Government</name>
+			<country>Russia</country>
+		</entity>
+		<entity>
+			<name>Rosenergoatom</name>
+			<country>Russsia</country>
+		</entity>
+		<entity>
+			<name>SCS</name>
+			<country>Russsia</country>
+		</entity>
+		<entity>
+			<name>Online Trolls</name>
+			<country>Russia</country>
+		</entity>
+		<entity>
+			<name>Energetic Bear</name>
+			<country>Russia</country>
+		</entity>
+	</entities>
