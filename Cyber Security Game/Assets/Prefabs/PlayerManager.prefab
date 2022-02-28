@@ -99,4 +99,5 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   EventCard: {fileID: 1477161622339551396, guid: 194f23b54c195d942b17ffa8287032b0, type: 3}
-  InfoScreen: {fileID: 0}
+  MainCanvas: {fileID: 0}
+  Entity: {fileID: 4637287643752046273, guid: 140b4b203bf53e54d9b8848bab156f7d, type: 3}

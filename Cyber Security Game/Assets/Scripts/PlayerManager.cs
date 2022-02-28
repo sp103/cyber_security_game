@@ -7,23 +7,41 @@ public class PlayerManager : NetworkBehaviour
 {
     // On screen game objects
     public GameObject EventCard;
-    public GameObject PlayerArea;
-    public GameObject EnemyArea;
     public GameObject MainCanvas;
+    public GameObject Entity;
     // Arrays for storing attack vectors and resource routes
     public AttackVector[] AttackVectors;
     public ResourceRoute[] ResourceRoutes;
     // Object that will read the xml file
     XmlReader reader = new XmlReader();
+    [SyncVar]
+    int players = 0;
 
     //Override function when client is started
     public override void OnStartClient()
     {
         // run base function
         base.OnStartClient();
-        // find the player and enemy areas
-        PlayerArea = GameObject.Find("PlayerArea");
-        EnemyArea = GameObject.Find("EnemyArea");
+        MainCanvas = GameObject.Find("MainScreen");
+        players++;
+        RpcLogToClients(players.ToString());
+        if (players == 1)
+        {
+            GameObject.Find("GCHQ").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("UK Energy").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("UK Government").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("UK PLC").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("Electorate").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+
+        }
+        else if (players == 2)
+        {
+            GameObject.Find("SCS").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("Rosenergoatom").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("Russian Government").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("Energetic Bear").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            GameObject.Find("Online Trolls").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+        }
     }
 
     // Override funtion when  a server is started
@@ -39,10 +57,6 @@ public class PlayerManager : NetworkBehaviour
         reader.LoadData();
         AttackVectors = reader.LoadVectors();
         ResourceRoutes = reader.LoadRoutes();
-        // debug check ** to be removed **
-        Debug.Log(CheckResourceRoutes("GCHQ","UK Energy"));
-        Entity Government = GameObject.Find("UK Government").GetComponent<Entity>();
-        Government.Resources += 3;
     }
 
     [Server]
