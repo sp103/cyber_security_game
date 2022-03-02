@@ -8,7 +8,8 @@ public class PlayerManager : NetworkBehaviour
     // On screen game objects
     public GameObject EventCard;
     public GameObject MainCanvas;
-    public GameObject Entity;
+    public GameObject[] UK = new GameObject[5];
+    public GameObject[] Russia = new GameObject[5];
     // Arrays for storing attack vectors and resource routes
     public AttackVector[] AttackVectors;
     public ResourceRoute[] ResourceRoutes;
@@ -18,29 +19,32 @@ public class PlayerManager : NetworkBehaviour
     int players = 0;
 
     //Override function when client is started
-    public override void OnStartClient()
+    public void OnClientConnect()
     {
+        Debug.Log("player connected");
         // run base function
         base.OnStartClient();
         MainCanvas = GameObject.Find("MainScreen");
         players++;
-        RpcLogToClients(players.ToString());
+        // Load Attack vectors and Resource routes form Xml file
+        reader.LoadData();
+        AttackVectors = reader.LoadVectors();
+        ResourceRoutes = reader.LoadRoutes();
         if (players == 1)
         {
-            GameObject.Find("GCHQ").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("UK Energy").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("UK Government").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("UK PLC").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("Electorate").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-
+            for (int i = 0; i < UK.Length; i++)
+            {
+                GameObject entity = Instantiate(UK[i]);
+                NetworkServer.Spawn(entity, connectionToClient);
+            }
         }
         else if (players == 2)
         {
-            GameObject.Find("SCS").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("Rosenergoatom").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("Russian Government").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("Energetic Bear").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-            GameObject.Find("Online Trolls").GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
+            for (int i = 0; i < Russia.Length; i++)
+            {
+                GameObject entity = Instantiate(Russia[i]);
+                NetworkServer.Spawn(entity, connectionToClient);
+            }
         }
     }
 
@@ -50,16 +54,12 @@ public class PlayerManager : NetworkBehaviour
     {
         // run the base function
         base.OnStartServer();
-        // Draw an event card at the start of the game
-        GameObject card = Instantiate(EventCard);
-        card.transform.SetParent(GameObject.Find("MainScreen").transform);
         // Load Attack vectors and Resource routes form Xml file
         reader.LoadData();
         AttackVectors = reader.LoadVectors();
         ResourceRoutes = reader.LoadRoutes();
     }
 
-    [Server]
     // Function used for finding specific attack vectors
     public bool CheckAttackVectors(string To, string From)
     {
@@ -70,7 +70,6 @@ public class PlayerManager : NetworkBehaviour
         return false;
     }
 
-    [Server]
     // Function used for finding specific resource routes
     public bool CheckResourceRoutes(string To, string From)
     {

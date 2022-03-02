@@ -100,4 +100,15 @@ MonoBehaviour:
   syncInterval: 0.1
   EventCard: {fileID: 1477161622339551396, guid: 194f23b54c195d942b17ffa8287032b0, type: 3}
   MainCanvas: {fileID: 0}
-  Entity: {fileID: 4637287643752046273, guid: 140b4b203bf53e54d9b8848bab156f7d, type: 3}
+  UK:
+  - {fileID: 5675783062607520608, guid: 8d34d752ce9e1d54aba45f1195a2ce73, type: 3}
+  - {fileID: 2821649893868278839, guid: d481e0df5595b3f498eaa7fed75b5714, type: 3}
+  - {fileID: 1133675914901383236, guid: 0909ef5b0c1cb714f959b75ada71399a, type: 3}
+  - {fileID: 599551263872078833, guid: fed99c2460cbcbf4798357d21be95fd9, type: 3}
+  - {fileID: 8033979318906244659, guid: f9a22f552c51ba74392a114001fca0e5, type: 3}
+  Russia:
+  - {fileID: 3712791683893846704, guid: 75ae148889d0c4141b226af82c73558d, type: 3}
+  - {fileID: 5525789223569768713, guid: d508b065e5cd3074caaac2fb3dc591d9, type: 3}
+  - {fileID: 2664921977947836995, guid: 632bd78f4e1bee04c9342d55e57c6483, type: 3}
+  - {fileID: 8879790093941462905, guid: c286a96dccb61964695d247c637672e4, type: 3}
+  - {fileID: 1313390126316529996, guid: d6a9240aeaec8b94eadad2e50d23e611, type: 3}
