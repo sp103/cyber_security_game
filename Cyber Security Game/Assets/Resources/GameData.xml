@@ -78,7 +78,7 @@
 		</resource_route>
 		<resource_route two_way ="True">
 			<to>Rosenergoatom</to>
-			<from>Government</from>
+			<from>Russian Government</from>
 		</resource_route>
 	</resource_routes>
 </game_data>

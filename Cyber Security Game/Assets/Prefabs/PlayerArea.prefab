@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vitality: 0
   Resources: 0
-  PlayerManager: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!1 &6137306025628125790
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +137,6 @@ GameObject:
   - component: {fileID: 6137306025628125767}
   - component: {fileID: 6137306025628125784}
   - component: {fileID: 6137306025628125785}
-  - component: {fileID: 6137306025628125786}
   - component: {fileID: 6137306025628125787}
   m_Layer: 0
   m_Name: GCHQ
@@ -236,21 +235,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6137306025628125786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6137306025628125790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3984a70e43106b84da35469ec4b48c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Vitality: 0
-  Resources: 0
-  PlayerManager: {fileID: 0}
 --- !u!114 &6137306025628125787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vitality: 0
   Resources: 0
-  PlayerManager: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!1 &6137306025919975824
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vitality: 0
   Resources: 0
-  PlayerManager: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!1 &6137306026355333553
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vitality: 0
   Resources: 0
-  PlayerManager: {fileID: 0}
+  GameManager: {fileID: 0}
 --- !u!1 &6137306026634558830
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,4 +659,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vitality: 0
   Resources: 0
-  PlayerManager: {fileID: 0}
+  GameManager: {fileID: 0}

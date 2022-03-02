@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour, IDropHandler {
 
     public int Vitality;
     public int Resources;
-    public PlayerManager PlayerManager;
+    public GameManager GameManager;
     readonly int[] one = new int[] { 0, 1, 1, 1, 1, 2 };
     readonly int[] two = new int[] { 0, 1, 1, 1, 2, 2 };
     readonly int[] three = new int[] { -1, 0, 1, 2, 2, 3 };
@@ -16,31 +16,37 @@ public class Entity : MonoBehaviour, IDropHandler {
     readonly int[] five = new int[] { -2, -1, 2, 3, 3, 4 };
     readonly int[] six = new int[] { -2, -1, 0, 3, 5, 6 };
 
+    void Start()
+    {
+        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
     // Function called when dragged to from another object
     public void OnDrop(PointerEventData eventData)
     {
-        // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
-        if (eventData.pointerDrag.tag == "Entity")
+        if (GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")
         {
-            NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-            PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-            if (PlayerManager.CheckAttackVectors(name, eventData.pointerDrag.name))
+            // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
+            if (eventData.pointerDrag.tag == "Entity")
             {
-                Debug.Log("attack vector found");
-                Attack(eventData.pointerDrag.GetComponent<Entity>(), 1);
+                if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
+                {
+                    Debug.Log("attack vector found");
+                    Attack(eventData.pointerDrag.GetComponent<Entity>(), 1);
+                }
+                else if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
+                {
+                    Debug.Log("resource route found");
+                    Transfer(eventData.pointerDrag.GetComponent<Entity>(), 1);
+                }
             }
-            else if (PlayerManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
+            else if (eventData.pointerDrag.tag == "Revitalise")
             {
-                Debug.Log("resource route found");
-                Transfer(eventData.pointerDrag.GetComponent<Entity>(), 1);
+                // NumInput input = GameObject.Find("NumInput").GetComponent<NumInput>();
+                // input.Create();
+                Debug.Log("revitalising");
+                Revitalise(1);
             }
-        }
-        else if (eventData.pointerDrag.tag == "Revitalise")
-        {
-            // NumInput input = GameObject.Find("NumInput").GetComponent<NumInput>();
-            // input.Create();
-            Debug.Log("revitalising");
-            Revitalise(1);
         }
     }
 
@@ -132,5 +138,4 @@ public class Entity : MonoBehaviour, IDropHandler {
             }
         }
     }
-
 }
