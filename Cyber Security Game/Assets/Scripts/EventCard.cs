@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
 
-public class EventCard : NetworkBehaviour
+public class EventCard : MonoBehaviour
 {
 
     public Sprite[] cardImages = new Sprite[9];

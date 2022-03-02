@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
-
-public class BlackMarketItem : NetworkBehaviour
+public class BlackMarketItem : MonoBehaviour
 {
 
     public int PlayerBid = 0;

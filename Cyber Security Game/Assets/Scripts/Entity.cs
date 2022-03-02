@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Mirror;
 using UnityEngine.UI;
 
-public class Entity : NetworkBehaviour, IDropHandler {
+public class Entity : MonoBehaviour, IDropHandler {
 
-    [SyncVar]
     public int Vitality;
-    [SyncVar]
     public int Resources;
     public PlayerManager PlayerManager;
     readonly int[] one = new int[] { 0, 1, 1, 1, 1, 2 };
@@ -48,7 +45,6 @@ public class Entity : NetworkBehaviour, IDropHandler {
     }
 
     // Function that attacks this entity from the entered entity with the entered amount of resources
-    [Command]
     void Attack(Entity from, int amount)
     {
         if (from.Resources >= amount && amount <= 6)
@@ -92,7 +88,6 @@ public class Entity : NetworkBehaviour, IDropHandler {
     }
 
     // Function used to transfer the entered amount from the entered entity to this entity
-    [Command]
     void Transfer(Entity from, int amount)
     {
         if(from.Resources >= amount)
@@ -104,7 +99,6 @@ public class Entity : NetworkBehaviour, IDropHandler {
     }
 
     // Function that takes the entered amount of resources and turns it into vitality
-    [Command]
     public void Revitalise(int cost)
     {
         if (Resources >= cost)
