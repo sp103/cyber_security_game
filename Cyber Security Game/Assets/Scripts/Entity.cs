@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Entity : MonoBehaviour, IDropHandler {
+public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
 
+    public GameObject input;
     public int Vitality;
     public int Resources;
     public GameManager GameManager;
@@ -19,6 +20,11 @@ public class Entity : MonoBehaviour, IDropHandler {
     void Start()
     {
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        // Debug.Log(eventData.position);
     }
 
     // Function called when dragged to from another object
@@ -42,10 +48,8 @@ public class Entity : MonoBehaviour, IDropHandler {
             }
             else if (eventData.pointerDrag.tag == "Revitalise")
             {
-                // NumInput input = GameObject.Find("NumInput").GetComponent<NumInput>();
-                // input.Create();
+                input.GetComponent<NumInput>().SetEntity(this, "revitalise");
                 Debug.Log("revitalising");
-                Revitalise(1);
             }
         }
     }
@@ -102,6 +106,8 @@ public class Entity : MonoBehaviour, IDropHandler {
             Resources += amount;
             Debug.Log(amount + " transfered from " + from.name + " to " + this.name);
         }
+        from.UpdateInterface();
+        UpdateInterface();
     }
 
     // Function that takes the entered amount of resources and turns it into vitality
@@ -136,6 +142,13 @@ public class Entity : MonoBehaviour, IDropHandler {
                     Vitality += 6;
                 break;
             }
+            UpdateInterface();
         }
+    }
+
+    public void UpdateInterface()
+    {
+        transform.GetChild(0).GetComponent<Text>().text = Vitality.ToString();
+        transform.GetChild(1).GetComponent<Text>().text = Resources.ToString();
     }
 }

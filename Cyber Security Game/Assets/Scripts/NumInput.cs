@@ -6,22 +6,37 @@ using UnityEngine.UI;
 public class NumInput : MonoBehaviour
 {
     public GameObject canvas;
+    public string function;
     public InputField input;
+    public Entity entity;
     public int num = 0;
 
     public void Hide()
     {
-        Destroy(canvas);
+        canvas.SetActive(false);
     }
 
-    public void Create()
+    public void Show()
     {
-        Instantiate(canvas, new Vector3(0, 0, 0), Quaternion.identity);
+        canvas.SetActive(true);
     }
 
-    public void EnterNum()
+    void Start()
     {
         Hide();
-        num = int.Parse(input.text);
+    }
+
+    public void SetEntity(Entity NewEntity, string func)
+    {
+        Show();
+        entity = NewEntity;
+        function = func;
+    }
+
+    public void EnterValue()
+    {
+        if (function == "revitalise")
+            entity.Revitalise(int.Parse(input.text));
+        Hide();
     }
 }

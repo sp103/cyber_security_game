@@ -10,13 +10,7 @@ public class OpenScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hide();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        canvas.SetActive(false);
     }
 
     public void hide()

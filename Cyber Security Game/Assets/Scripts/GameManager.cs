@@ -25,7 +25,12 @@ public class GameManager : MonoBehaviour
         reader.LoadData();
         AttackVectors = reader.LoadVectors();
         ResourceRoutes = reader.LoadRoutes();
+        // Give government resources for the first turn
         GameObject.Find("UK Government").GetComponent<Entity>().Resources += 3;
+        GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
+        // Draw an event card
+        GameObject card = Instantiate(EventCard);
+        card.transform.SetParent(GameObject.Find("MainScreen").transform);
     }
 
     // Function used for finding specific attack vectors
@@ -53,13 +58,25 @@ public class GameManager : MonoBehaviour
         if (Turns == 23) EndGame();
         PlayerTurn = !PlayerTurn;
         if (PlayerTurn)
+        {
             GameObject.Find("UK Government").GetComponent<Entity>().Resources += 3;
+            GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
+        }
         else
+        {
             GameObject.Find("Russian Government").GetComponent<Entity>().Resources += 3;
+            GameObject.Find("Russian Government").GetComponent<Entity>().UpdateInterface();
+        }
         Turns++;
         month = months[Turns / 2];
         quarter = Turns / 6;
         Debug.Log(month + " Q" + quarter);
+        if (Turns % 2 == 0)
+        {
+            Destroy(GameObject.Find("EventCard(Clone)"));
+            GameObject card = Instantiate(EventCard);
+            card.transform.SetParent(GameObject.Find("MainScreen").transform);
+        }
 
     }
 
@@ -67,18 +84,4 @@ public class GameManager : MonoBehaviour
     {
 
     }
-
-    // Server function that handles the end of a player's turn
-    //void updateTurns()
-    //{
-    //    GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-    //    gm.UpdateTurns();
-    //    // Once both players have taken their turn an event card is drawn
-    //    if (gm.Turns % 2 == 0)
-    //    {
-    //        Destroy(GameObject.Find("EventCard(Clone)"));
-    //        GameObject card = Instantiate(EventCard);
-    //        card.transform.SetParent(GameObject.Find("MainScreen").transform);
-    //    }
-    //}
 }
