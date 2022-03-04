@@ -35,15 +35,14 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
             // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
             if (eventData.pointerDrag.tag == "Entity")
             {
-                if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
+                if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
                 {
-                    Debug.Log("attack vector found");
-                    Attack(eventData.pointerDrag.GetComponent<Entity>(), 1);
-                }
-                else if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
-                {
-                    Debug.Log("resource route found");
-                    Transfer(eventData.pointerDrag.GetComponent<Entity>(), 1);
+                    // check if event card is block uk resource transfer
+                    if (!(transform.parent.name == "PlayerArea" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
+                    {
+                        input.GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
+                        Debug.Log("resource route found");
+                    }
                 }
             }
             else if (eventData.pointerDrag.tag == "Revitalise")
@@ -52,10 +51,21 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
                 Debug.Log("revitalising");
             }
         }
+        else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")
+        {
+            if (eventData.pointerDrag.tag == "Entity")
+            {
+                if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
+                {
+                    input.GetComponent<NumInput>().SetEntity(this, "attack", eventData.pointerDrag.GetComponent<Entity>());
+                    Debug.Log("attack vector found");
+                }
+            }
+        }
     }
 
     // Function that attacks this entity from the entered entity with the entered amount of resources
-    void Attack(Entity from, int amount)
+    public void Attack(Entity from, int amount)
     {
         if (from.Resources >= amount && amount <= 6)
         {
@@ -98,7 +108,7 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
     }
 
     // Function used to transfer the entered amount from the entered entity to this entity
-    void Transfer(Entity from, int amount)
+    public void Transfer(Entity from, int amount)
     {
         if(from.Resources >= amount)
         {

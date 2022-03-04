@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4570190179182470093}
   - component: {fileID: 4570190179182470092}
-  - component: {fileID: 4570190179182470095}
   - component: {fileID: 4570190179182470094}
   - component: {fileID: 4570190179182470089}
-  - component: {fileID: 4570190179182470088}
   - component: {fileID: 4570190179182470091}
+  - component: {fileID: 8702201118006302266}
   m_Layer: 5
   m_Name: InfoScreen
   m_TagString: Untagged
@@ -38,7 +37,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -63,29 +62,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &4570190179182470095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4570190179182470090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!114 &4570190179182470094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +87,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4570190179182470090}
   m_CullTransparentMesh: 1
---- !u!114 &4570190179182470088
+--- !u!114 &4570190179182470091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570190179182470090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e258d1f165af6e643956b92d68d2ece1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 4570190179182470090}
+  infoImg:
+  - {fileID: 21300000, guid: e41844bad4a63084c959cd9c771aa5cd, type: 3}
+  - {fileID: 21300000, guid: eb3fb3e60ecb4cc48926b52d4fc240d2, type: 3}
+  - {fileID: 21300000, guid: 47ec411014e642742994b61bcd49f25b, type: 3}
+  - {fileID: 21300000, guid: 57a9106daf841cf45b710effeef56e83, type: 3}
+  - {fileID: 21300000, guid: e2e52a04b177dcf4ca644d912f55b6d7, type: 3}
+  - {fileID: 21300000, guid: 0ba702a0f0682de40ace725f994044b9, type: 3}
+  - {fileID: 21300000, guid: 60d93bd8862a4d641bbf5e3603e8706e, type: 3}
+  - {fileID: 21300000, guid: 6d03e530f57e78642adf18378ceb793d, type: 3}
+  - {fileID: 21300000, guid: 6cb2fdf729cb7b145840e55d8e46b869, type: 3}
+  - {fileID: 21300000, guid: 29765804e4af6af4fb06d73f6674dd2d, type: 3}
+--- !u!114 &8702201118006302266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,25 +141,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4570190179182470091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4570190179182470090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e258d1f165af6e643956b92d68d2ece1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 4570190179182470090}
-  infoImg:
-  - {fileID: 21300000, guid: e41844bad4a63084c959cd9c771aa5cd, type: 3}
-  - {fileID: 21300000, guid: eb3fb3e60ecb4cc48926b52d4fc240d2, type: 3}
-  - {fileID: 21300000, guid: 47ec411014e642742994b61bcd49f25b, type: 3}
-  - {fileID: 21300000, guid: 57a9106daf841cf45b710effeef56e83, type: 3}
-  - {fileID: 21300000, guid: e2e52a04b177dcf4ca644d912f55b6d7, type: 3}
 --- !u!1 &4570190180083780625
 GameObject:
   m_ObjectHideFlags: 0

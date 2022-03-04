@@ -7,7 +7,8 @@ public class InfoScreen : MonoBehaviour
 {
 
     public GameObject canvas;
-    public Sprite[] infoImg = new Sprite[5];
+    public Sprite[] infoImg = new Sprite[10];
+    GameManager manager;
 
     public void Hide()
     {
@@ -16,11 +17,17 @@ public class InfoScreen : MonoBehaviour
 
     public void Show(int i)
     {
-        if (i < 5)
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (i < 5 && i >= 0 && manager.PlayerTurn)
         {
             GetComponent<Image>().sprite = infoImg[i];
             Instantiate(canvas, new Vector3(0, 0, 0), Quaternion.identity);
             
+        }
+        else if (i > 4 && i < 10 && !manager.PlayerTurn)
+        {
+            GetComponent<Image>().sprite = infoImg[i];
+            Instantiate(canvas, new Vector3(0, 0, 0), Quaternion.identity);
         }
     }
 }

@@ -9,6 +9,7 @@ public class NumInput : MonoBehaviour
     public string function;
     public InputField input;
     public Entity entity;
+    public Entity fromEntity;
     public int num = 0;
 
     public void Hide()
@@ -33,10 +34,23 @@ public class NumInput : MonoBehaviour
         function = func;
     }
 
+    public void SetEntity(Entity NewEntity, string func, Entity from)
+    {
+        Show();
+        entity = NewEntity;
+        function = func;
+        fromEntity = from;
+    }
+
     public void EnterValue()
     {
         if (function == "revitalise")
             entity.Revitalise(int.Parse(input.text));
+        else if (function == "transfer")
+            entity.Transfer(fromEntity, int.Parse(input.text));
+        else if (function == "attack")
+            entity.Attack(fromEntity, int.Parse(input.text));
+        input.text = "";
         Hide();
     }
 }
