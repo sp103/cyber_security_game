@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public int VictoryPoints = 0;
     int GCHQVitality = 0;
     int GCHQQuarters = 0;
-
+    public Text text;
 
     public void MonthlyUpdate(string month)
     {
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
             VictoryPoints += 4;
         if (month == "March" || month == "June" || month == "September" || month == "December")
             QuarterlyUpdate();
-        Debug.Log(VictoryPoints + " Victory Points");
+        text.text = (VictoryPoints + " UK Victory Points");
     }
     public void QuarterlyUpdate()
     {

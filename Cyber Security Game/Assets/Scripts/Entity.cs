@@ -125,31 +125,36 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
     {
         if (Resources >= cost)
         {
-            Resources -= cost;
             switch(cost)
             {
                 case 1:
                     Vitality++;
+                    Resources -= cost;
                 break;
                     
                 case 2:
                     Vitality += 2;
+                    Resources -= cost;
                 break;
                     
                 case 4:
                     Vitality += 3;
+                    Resources -= cost;
                 break;
                     
                 case 5:
                     Vitality += 4;
+                    Resources -= cost;
                 break;
 
                 case 6:
                     Vitality += 5;
+                    Resources -= cost;
                 break;
 
                 case 7:
                     Vitality += 6;
+                    Resources -= cost;
                 break;
             }
             UpdateInterface();

@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Player player;
-    public GameObject PlayerArea;
-    public GameObject EnemyArea;
+    public Enemy enemy;
     public int Turns = 0;
     public bool PlayerTurn = true;
     // Arrays for storing attack vectors and resource routes
@@ -22,6 +21,7 @@ public class GameManager : MonoBehaviour
     int quarter;
     public Announcement announcement;
     public Announcement PlayerAnnouncement;
+    public GameObject BlackMarket;
 
     private void Start()
     {
@@ -64,7 +64,11 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
         if (Turns % 2 == 1)
+        {
             player.MonthlyUpdate(month);
+            enemy.MonthlyUpdate(month);
+        }
+        BlackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
         if (Turns == 23) EndGame();
         PlayerTurn = !PlayerTurn;
         if (PlayerTurn)
