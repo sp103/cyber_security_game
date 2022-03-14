@@ -60,7 +60,6 @@ public class EventCard : MonoBehaviour
             break;
             case 7:
                 // Quantum Breakthrough
-                // all entites get +1 resources and +1 vitality
                 foreach (Transform child in GameObject.Find("PlayerArea").transform)
                 {
                     Entity entity = child.GetComponent<Entity>();
@@ -103,6 +102,6 @@ public class EventCard : MonoBehaviour
     {
         maximised = false;
         transform.localScale = new Vector2(0.25f,0.25f);
-        transform.localPosition = new Vector3(147, -272, 0);
+        transform.localPosition = new Vector3(30, -275, 0);
     }
 }

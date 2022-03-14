@@ -12,6 +12,6 @@ public class Dragging : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.localPosition = new Vector3(94, -289, 0);
+        transform.localPosition = new Vector3(-40, -289, 0);
     }
 }

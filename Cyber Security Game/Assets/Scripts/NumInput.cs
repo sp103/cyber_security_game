@@ -40,6 +40,8 @@ public class NumInput : MonoBehaviour
         entity = NewEntity;
         function = func;
         fromEntity = from;
+        transform.GetChild(3).GetComponent<Text>().text = ("Transfering from " + from.name + " to " + NewEntity.name);
+        transform.GetChild(4).GetComponent<Text>().text = (from.Resources + " resources available");
     }
 
     public void EnterValue()

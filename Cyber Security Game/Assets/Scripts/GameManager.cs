@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     int quarter;
     public Announcement announcement;
     public Announcement PlayerAnnouncement;
+    public Text VictoryPoints;
     public GameObject BlackMarket;
 
     private void Start()
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         announcement.transform.SetAsLastSibling();
         PlayerAnnouncement.SetText("UK's Turn");
         PlayerAnnouncement.transform.SetAsLastSibling();
+        VictoryPoints.text = "0 Victory Points";
     }
 
     // Function used for finding specific attack vectors
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
             GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
             PlayerAnnouncement.SetText("UK's Turn");
             PlayerAnnouncement.transform.SetAsLastSibling();
+            VictoryPoints.text = (player.VictoryPoints + " Victory Points");
         }
         else
         {
@@ -84,6 +87,7 @@ public class GameManager : MonoBehaviour
             GameObject.Find("Russian Government").GetComponent<Entity>().UpdateInterface();
             PlayerAnnouncement.SetText("Russia's Turn");
             PlayerAnnouncement.transform.SetAsLastSibling();
+            VictoryPoints.text = (enemy.VictoryPoints + " Victory Points");
         }
         Turns++;
         month = months[Turns / 2];
