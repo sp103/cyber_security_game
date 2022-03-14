@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.764151, g: 0.039649345, b: 0.039649345, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1343,22 +1343,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 346282616854489746, guid: ffe5ec84a3502c946a5da0aa7fa190fd, type: 3}
   images:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -5776546536076325428, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -6775420313137146061, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -6272334123411673700, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: 8326304360915113004, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -6393695815503082821, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -8275332193620474521, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: 6877720847910689195, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: 5380801780092888959, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -1168983831103386062, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: 4932303932805792586, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -4396522206346377971, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -4195469642677423033, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -5180023966538287928, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: 1239954264709624574, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -6964901229865464225, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
+  - {fileID: -4900818362545942209, guid: 8404f2ade0f16f64bb9e9558aa83525f, type: 3}
   PlayerItems: {fileID: 2068162910}
   EnemyItems: {fileID: 864401556}
   manager: {fileID: 82910139}

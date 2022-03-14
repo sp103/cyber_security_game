@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 346282616854489747}
   - component: {fileID: 346282616854489745}
   - component: {fileID: 346282616854489744}
+  - component: {fileID: -2884571135913536706}
   m_Layer: 0
   m_Name: OwnedItem
   m_TagString: Untagged
@@ -78,6 +79,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-2884571135913536706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346282616854489746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140ecdb1e0463494ea77f9d366fce9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: 0
 --- !u!1 &346282616877690104
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,9 +367,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BlackMarketItem, Assembly-CSharp
-        m_MethodName: Bid
+      - m_Target: {fileID: -2884571135913536706}
+        m_TargetAssemblyTypeName: PlayBlackMarketItem, Assembly-CSharp
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
