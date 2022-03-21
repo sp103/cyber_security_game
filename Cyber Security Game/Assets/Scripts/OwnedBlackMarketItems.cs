@@ -46,7 +46,7 @@ public class OwnedBlackMarketItems : MonoBehaviour
             GameObject item = Instantiate(Item);
             item.transform.SetParent(PlayerItems.transform);
             item.transform.localPosition = new Vector3(0, -(PlayerHeight - 420), 0);
-            //item.GetComponent<BlackMarketItem>().id = ItemID;
+            item.GetComponent<PlayBlackMarketItem>().card = ItemID;
             item.transform.GetChild(0).GetComponent<Image>().sprite = images[ItemID];
             item.GetComponent<PlayBlackMarketItem>().card = ItemID;
             PlayerItemsList.Add(item);
@@ -59,7 +59,7 @@ public class OwnedBlackMarketItems : MonoBehaviour
             GameObject item = Instantiate(Item);
             item.transform.SetParent(EnemyItems.transform);
             item.transform.localPosition = new Vector3(0, -(EnemyHeight - 420), 0);
-            //item.GetComponent<BlackMarketItem>().id = ItemID;
+            item.GetComponent<PlayBlackMarketItem>().card = ItemID;
             item.transform.GetChild(0).GetComponent<Image>().sprite = images[ItemID];
             EnemyItemsList.Add(item);
             AlignElements(EnemyItemsList);

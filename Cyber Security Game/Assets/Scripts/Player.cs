@@ -8,7 +8,9 @@ public class Player : MonoBehaviour
     public int VictoryPoints = 0;
     int GCHQVitality = 0;
     int GCHQQuarters = 0;
-    public Text text;
+    public Text VictoryPointText;
+    public GameObject ReportScreen;
+    int quarter = 0;
 
     public void MonthlyUpdate(string month)
     {
@@ -26,10 +28,11 @@ public class Player : MonoBehaviour
             VictoryPoints += 4;
         if (month == "March" || month == "June" || month == "September" || month == "December")
             QuarterlyUpdate();
-        text.text = (VictoryPoints + " UK Victory Points");
+        VictoryPointText.text = (VictoryPoints + " UK Victory Points");
     }
     public void QuarterlyUpdate()
     {
+        quarter++;
         if (transform.GetChild(4).GetComponent<Entity>().Vitality > GCHQVitality)
         {
             switch (GCHQQuarters)
@@ -47,7 +50,10 @@ public class Player : MonoBehaviour
                     VictoryPoints += 7;
                 break;
             }
+            GCHQQuarters++;
         }
-            
+        string info = ("UK Government Q" + quarter + " Report \n\n");
+        ReportScreen.transform.GetChild(1).GetComponent<Text>().text = info;
+        ReportScreen.GetComponent<OpenScreen>().show();
     }
 }

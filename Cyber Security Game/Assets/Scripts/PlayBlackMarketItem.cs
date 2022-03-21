@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayBlackMarketItem : MonoBehaviour
 {
     public int card;
+    Dropdown dropdown;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        dropdown = transform.GetChild(3).GetComponent<Dropdown>();
+        if (card == 1)
+        {
+            dropdown.gameObject.SetActive(true);
+            dropdown.options.Add(new Dropdown.OptionData("hi"));
+        }
     }
 
     public void Play()
@@ -23,11 +30,11 @@ public class PlayBlackMarketItem : MonoBehaviour
             break;
             case 2:
                 // electorate takes 1/2 damage for 3 turns
-
+                
             break;
             case 3:
                 // uk plc gets 1 vitality every time it takes damage
-                Debug.Log("Play card 4");
+                
             break;
             case 4:
             case 5:
@@ -60,5 +67,6 @@ public class PlayBlackMarketItem : MonoBehaviour
                 // the cost of vitality for an entity costs one less resource
             break;
         }
+        Destroy(gameObject);
     }
 }

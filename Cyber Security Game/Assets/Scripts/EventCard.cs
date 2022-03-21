@@ -43,20 +43,12 @@ public class EventCard : MonoBehaviour
                 UkPlc.Resources -= 2;
                 UkPlc.UpdateInterface();
                 break;
-            case 4:
-                // Embargoed
-                // block russian bidding on black market
-            break;
             case 5:
                 // Lax Opsec
                 Entity RussainGov = GameObject.Find("Russian Government").GetComponent<Entity>();
                 RussainGov.Resources =- 1;
                 RussainGov.Vitality = -1;
                 RussainGov.UpdateInterface();
-            break;
-            case 6:
-                // People's Revolt
-                // russian government recieves no resources
             break;
             case 7:
                 // Quantum Breakthrough

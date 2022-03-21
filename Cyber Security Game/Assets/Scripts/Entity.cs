@@ -16,6 +16,8 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
     readonly int[] four = new int[] { -1, 0, 1, 2, 3, 4 };
     readonly int[] five = new int[] { -2, -1, 2, 3, 3, 4 };
     readonly int[] six = new int[] { -2, -1, 0, 3, 5, 6 };
+    int DamageMultiplier = 1;
+    public bool discount;
 
     void Start()
     {
@@ -65,7 +67,7 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
     }
 
     // Function that attacks this entity from the entered entity with the entered amount of resources
-    public void Attack(Entity from, int amount)
+    public Vector3 Attack(Entity from, int amount)
     {
         if (from.Resources >= amount && amount <= 6)
         {
@@ -95,16 +97,25 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
                 break;
 
             }
-            Debug.Log(attack);
+            int attackerDamage = 0;
             if (attack >= 0)
             {
-                this.Vitality -= attack;
+                this.Vitality -= attack * DamageMultiplier;
             }
             else
             {
-                from.Vitality -= (attack * -1);
+                from.Vitality -= (attack * - 1);
+                attackerDamage = attack * - 1;
+                attack = 0;
             }
+            if (from.name == "Online Trolls" && (amount == 3 || amount == 4))
+                GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints--;
+            if (from.name == "Online Trolls" && (amount == 5 || amount == 6))
+                GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints -= 2;
+            UpdateInterface();
+            return new Vector3(dice, attackerDamage, attack);
         }
+        return Vector3.zero;
     }
 
     // Function used to transfer the entered amount from the entered entity to this entity
@@ -116,6 +127,8 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
             Resources += amount;
             Debug.Log(amount + " transfered from " + from.name + " to " + this.name);
         }
+        if (from.name == "Electorate")
+            GameObject.Find("PlayerArea").GetComponent<Player>().VictoryPoints--;
         from.UpdateInterface();
         UpdateInterface();
     }
@@ -165,5 +178,10 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
     {
         transform.GetChild(0).GetComponent<Text>().text = Vitality.ToString();
         transform.GetChild(1).GetComponent<Text>().text = Resources.ToString();
+    }
+
+    public void MonthlyUpdate()
+    {
+
     }
 }

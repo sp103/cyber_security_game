@@ -74,14 +74,19 @@ public class BlackMarketItem : MonoBehaviour
             {
                 if (GameObject.Find("SCS").GetComponent<Entity>().Resources >= NewBid)
                 {
-                    active = true;
-                    LastBid = "Enemy";
-                    BidAmount = NewBid;
-                    BidTurn = manager.Turns;
-                    transform.GetChild(0).GetComponent<InputField>().text = "";
-                    text.SetText("You are the highest bidder");
-                    BidText.text = "No Current Bids";
-                    BidText.text = ("Current bid " + BidAmount);
+                    if (GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 4)
+                        text.SetText("Russia has been embargoed this month");
+                    else
+                    {
+                        active = true;
+                        LastBid = "Enemy";
+                        BidAmount = NewBid;
+                        BidTurn = manager.Turns;
+                        transform.GetChild(0).GetComponent<InputField>().text = "";
+                        text.SetText("You are the highest bidder");
+                        BidText.text = "No Current Bids";
+                        BidText.text = ("Current bid " + BidAmount);
+                    }
                 }
                 else
                     text.SetText("Not enough resources to bid");

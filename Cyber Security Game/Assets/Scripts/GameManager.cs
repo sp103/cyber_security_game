@@ -83,7 +83,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            GameObject.Find("Russian Government").GetComponent<Entity>().Resources += 3;
+            if (!(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6))
+                GameObject.Find("Russian Government").GetComponent<Entity>().Resources += 3;
             GameObject.Find("Russian Government").GetComponent<Entity>().UpdateInterface();
             PlayerAnnouncement.SetText("Russia's Turn");
             PlayerAnnouncement.transform.SetAsLastSibling();
