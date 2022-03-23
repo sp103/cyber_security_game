@@ -51,7 +51,7 @@ public class Entity : MonoBehaviour, IDropHandler {
                     }
                 }
             }
-            else if (eventData.pointerDrag.tag == "Revitalise")
+            else if ((eventData.pointerDrag.tag == "Revitalise") && !revitalised)
             {
                 input.GetComponent<NumInput>().SetEntity(this, "revitalise");
                 Debug.Log("revitalising");
@@ -180,6 +180,7 @@ public class Entity : MonoBehaviour, IDropHandler {
                     Resources -= cost;
                     break;
             }
+            revitalised = true;
             UpdateInterface();
         }
     }
