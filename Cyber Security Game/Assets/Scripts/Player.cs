@@ -11,6 +11,14 @@ public class Player : MonoBehaviour
     public Text VictoryPointText;
     public GameObject ReportScreen;
     int quarter = 0;
+    // black market defence card, true once played
+    public bool PLCDefence = false;
+
+    public void TurnUpdate()
+    {
+        foreach (Transform child in transform)
+            child.GetComponent<Entity>().TurnUpdate();
+    }
 
     public void MonthlyUpdate(string month)
     {

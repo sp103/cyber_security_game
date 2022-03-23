@@ -53,6 +53,16 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    // Function used for Enabling specific attack vectors
+    public void EnableAttackVector(string To, string From)
+    {
+        foreach (AttackVector vector in AttackVectors)
+        {
+            if (vector.To == To && vector.From == From)
+                vector.Enabled = true;
+        }
+    }
+
     // Function used for finding specific resource routes
     public bool CheckResourceRoutes(string To, string From)
     {
@@ -65,6 +75,8 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
+        player.TurnUpdate();
+        enemy.TurnUpdate();
         if (Turns % 2 == 1)
         {
             player.MonthlyUpdate(month);

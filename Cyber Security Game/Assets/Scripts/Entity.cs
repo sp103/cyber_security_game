@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
+public class Entity : MonoBehaviour, IDropHandler {
 
     public GameObject input;
-    public int Vitality;
+    public double Vitality;
     public int Resources;
     public GameManager GameManager;
     readonly int[] one = new int[] { 0, 1, 1, 1, 1, 2 };
@@ -16,30 +16,34 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
     readonly int[] four = new int[] { -1, 0, 1, 2, 3, 4 };
     readonly int[] five = new int[] { -2, -1, 2, 3, 3, 4 };
     readonly int[] six = new int[] { -2, -1, 0, 3, 5, 6 };
-    int DamageMultiplier = 1;
-    public bool discount;
+    // damage multiplier for black market cards
+    public double DamageMultiplier = 1;
+    // keeps track of how many turns the multiplier effect lasts
+    public int MultiplierTurns = 0;
+    // used to give revitalise discount from black market card
+    public bool discount = false;
+    // true if this entity has been paralysed from an attack
+    public bool paralysed = false;
+    // keeps track of how long the paralysed effect lasts
+    public int paralysedTurns = 0;
+    bool revitalised = false;
 
     void Start()
     {
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        // Debug.Log(eventData.position);
-    }
-
     // Function called when dragged to from another object
     public void OnDrop(PointerEventData eventData)
     {
-        if (GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")
+        if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")&& !paralysed)
         {
             // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
             if (eventData.pointerDrag.tag == "Entity")
             {
                 if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
                 {
-                    // check if event card is block uk resource transfer
+                    // check if event card is blocking uk resource transfer
                     if (!(transform.parent.name == "PlayerArea" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
                     {
                         input.GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
@@ -55,7 +59,7 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
         }
         else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")
         {
-            if (eventData.pointerDrag.tag == "Entity")
+            if (eventData.pointerDrag.tag == "Entity" && DamageMultiplier != 0)
             {
                 if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
                 {
@@ -112,7 +116,13 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
                 GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints--;
             if (from.name == "Online Trolls" && (amount == 5 || amount == 6))
                 GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints -= 2;
+            // check if uk plc defence card is active and give uk plc vitality if it is
+            if (name == "UK PLC" && attack > 0)
+                if (transform.parent.GetComponent<Player>().PLCDefence)
+                    Vitality++;
+            // update both entity's interfaces
             UpdateInterface();
+            from.UpdateInterface();
             return new Vector3(dice, attackerDamage, attack);
         }
         return Vector3.zero;
@@ -133,42 +143,42 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
         UpdateInterface();
     }
 
-    // Function that takes the entered amount of resources and turns it into vitality
+    //Function that takes the entered amount of resources and turns it into vitality
     public void Revitalise(int cost)
     {
         if (Resources >= cost)
         {
-            switch(cost)
+            switch (cost)
             {
                 case 1:
                     Vitality++;
                     Resources -= cost;
-                break;
-                    
+                    break;
+
                 case 2:
                     Vitality += 2;
                     Resources -= cost;
-                break;
-                    
+                    break;
+
                 case 4:
                     Vitality += 3;
                     Resources -= cost;
-                break;
-                    
+                    break;
+
                 case 5:
                     Vitality += 4;
                     Resources -= cost;
-                break;
+                    break;
 
                 case 6:
                     Vitality += 5;
                     Resources -= cost;
-                break;
+                    break;
 
                 case 7:
                     Vitality += 6;
                     Resources -= cost;
-                break;
+                    break;
             }
             UpdateInterface();
         }
@@ -180,8 +190,16 @@ public class Entity : MonoBehaviour, IDropHandler, IDragHandler {
         transform.GetChild(1).GetComponent<Text>().text = Resources.ToString();
     }
 
-    public void MonthlyUpdate()
+    public void TurnUpdate()
     {
-
+        if (MultiplierTurns != 0)
+            MultiplierTurns--;
+        else if (DamageMultiplier != 1)
+            DamageMultiplier = 1;
+        if (paralysedTurns != 0)
+            paralysedTurns--;
+        else if (paralysed)
+            paralysed = false;
+        revitalised = false;
     }
 }

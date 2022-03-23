@@ -8,8 +8,14 @@ public class Enemy : MonoBehaviour
     public int VictoryPoints = 0;
     int RosenergoatomVitality = 0;
     int RosenergoatomMonths = 0;
-    int BearVitality = 0;
+    double BearVitality = 0;
     public Text text;
+
+    public void TurnUpdate()
+    {
+        foreach (Transform child in transform)
+            child.GetComponent<Entity>().TurnUpdate();
+    }
 
     public void MonthlyUpdate(string month)
     {
