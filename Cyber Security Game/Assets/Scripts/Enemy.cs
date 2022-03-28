@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class Enemy : MonoBehaviour
     int RosenergoatomMonths = 0;
     double BearVitality = 0;
     public Text text;
+
+    private void Start()
+    {
+        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.localPosition = new Vector3(34.50063f, -50, 0);
+    }
 
     public void TurnUpdate()
     {

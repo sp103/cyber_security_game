@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public Player player;
     public Enemy enemy;
@@ -24,8 +25,10 @@ public class GameManager : MonoBehaviour
     public Text VictoryPoints;
     public GameObject BlackMarket;
 
-    private void Start()
+    [Server]
+    public override void OnStartServer()
     {
+        base.OnStartServer();
         // Load Attack vectors and Resource routes form Xml file
         reader.LoadData();
         AttackVectors = reader.LoadVectors();

@@ -43,4 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef7e33d9281dcb4d84accd8757de8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  player: {fileID: 0}
+  enemy: {fileID: 0}
   Turns: 0
+  PlayerTurn: 1
+  EventCard: {fileID: 1477161622339551396, guid: 194f23b54c195d942b17ffa8287032b0, type: 3}
+  announcement: {fileID: 0}
+  PlayerAnnouncement: {fileID: 0}
+  VictoryPoints: {fileID: 0}
+  BlackMarket: {fileID: 0}

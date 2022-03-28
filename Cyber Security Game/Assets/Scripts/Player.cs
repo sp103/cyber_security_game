@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     public int VictoryPoints = 0;
     int GCHQVitality = 0;
@@ -13,6 +14,12 @@ public class Player : MonoBehaviour
     int quarter = 0;
     // black market defence card, true once played
     public bool PLCDefence = false;
+
+    private void Start()
+    {
+        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.localPosition = new Vector3(34.5f, -30, 0);
+    }
 
     public void TurnUpdate()
     {
@@ -60,8 +67,8 @@ public class Player : MonoBehaviour
             }
             GCHQQuarters++;
         }
-        string info = ("UK Government Q" + quarter + " Report \n\n");
-        ReportScreen.transform.GetChild(1).GetComponent<Text>().text = info;
-        ReportScreen.GetComponent<OpenScreen>().show();
+        //string info = ("UK Government Q" + quarter + " Report \n\n");
+        //ReportScreen.transform.GetChild(1).GetComponent<Text>().text = info;
+        //ReportScreen.GetComponent<OpenScreen>().show();
     }
 }
