@@ -7,6 +7,12 @@ public class ResourceRoute
     public string To;
     public string From;
 
+    public ResourceRoute()
+    {
+        To = "None";
+        From = "None";
+    }
+
     public ResourceRoute(string to, string from)
     {
         To = to;

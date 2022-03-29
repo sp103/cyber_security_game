@@ -15,29 +15,29 @@ public class NumInput : MonoBehaviour
     public Sprite[] images = new Sprite[6];
     public GameObject reportScreen;
 
-    public void Hide()
-    {
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(5).gameObject.SetActive(false);
-        transform.GetChild(6).gameObject.SetActive(false);
-        canvas.SetActive(false);
-        input.text = "";
-    }
+    //public void Hide()
+    //{
+    //    transform.GetChild(0).gameObject.SetActive(true);
+    //    transform.GetChild(5).gameObject.SetActive(false);
+    //    transform.GetChild(6).gameObject.SetActive(false);
+    //    canvas.SetActive(false);
+    //    input.text = "";
+    //}
 
-    public void Show()
-    {
-        canvas.SetActive(true);
-    }
+    //public void Show()
+    //{
+    //    canvas.SetActive(true);
+    //}
 
     void Start()
     {
-        Hide();
+        //Hide();
         AttackSlider.onValueChanged.AddListener(delegate { SliderValue(); });
     }
 
     public void SetEntity(Entity NewEntity, string func)
     {
-        Show();
+        //Show();
         entity = NewEntity;
         function = func;
         transform.GetChild(3).GetComponent<Text>().text = ("Revitalising " + NewEntity.name);
@@ -46,7 +46,7 @@ public class NumInput : MonoBehaviour
 
     public void SetEntity(Entity NewEntity, string func, Entity from)
     {
-        Show();
+        //Show();
         entity = NewEntity;
         function = func;
         fromEntity = from;
@@ -80,11 +80,17 @@ public class NumInput : MonoBehaviour
             reportScreen.transform.GetChild(1).GetComponent<Text>().text = ("Attack Report \n\n\n Attack launched from " + fromEntity.name + " to " + entity.name + "\n\n You rolled a " + result.x + "\n\n You suffered " + result.y + " damage \n\n" + entity.name + " suffered " + result.z + " damage");
             reportScreen.GetComponent<OpenScreen>().show();
         }
-        Hide();
+        //Hide();
+        DestroyScreen();
     }
 
     void SliderValue()
     {
         transform.GetChild(6).GetComponent<Image>().sprite = images[(int)AttackSlider.value];
+    }
+
+    public void DestroyScreen()
+    {
+        Destroy(this.gameObject);
     }
 }

@@ -6,44 +6,79 @@ using Mirror;
 
 public class GameManager : NetworkBehaviour
 {
+    public static GameManager instance;
+
+    // reference to uk player
     public Player player;
+    // reference to russian player
     public Enemy enemy;
+
     public int Turns = 0;
     public bool PlayerTurn = true;
+
     // Arrays for storing attack vectors and resource routes
-    public AttackVector[] AttackVectors;
-    public ResourceRoute[] ResourceRoutes;
+    public SyncList<AttackVector> AttackVectors = new SyncList<AttackVector>();
+    public SyncList<ResourceRoute> ResourceRoutes = new SyncList<ResourceRoute>();
+
     // Object that will read the xml file
     XmlReader reader = new XmlReader();
-    // On screen game objects
+
+    // event card prefab
     public GameObject EventCard;
     string[] months = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     string month = "January";
     int quarter;
-    public Announcement announcement;
-    public Announcement PlayerAnnouncement;
+
+    // text objects for displaying turn info to players
+    public Text TurnData;
+    public Text PlayerData;
     public Text VictoryPoints;
+
     public GameObject BlackMarket;
 
-    [Server]
-    public override void OnStartServer()
+    // the number of players connected
+    [SyncVar]
+    int connections = 0;
+
+    private void Awake()
     {
-        base.OnStartServer();
-        // Load Attack vectors and Resource routes form Xml file
-        reader.LoadData();
-        AttackVectors = reader.LoadVectors();
-        ResourceRoutes = reader.LoadRoutes();
-        // Give government resources for the first turn
-        GameObject.Find("UK Government").GetComponent<Entity>().Resources += 3;
-        GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    [ClientRpc]
+    public void PlayerLoaded()
+    {
+        connections++;
+        if (connections == 1)
+        {
+            // Load Attack vectors and Resource routes form Xml file
+            reader.LoadData();
+            AttackVectors = reader.LoadVectors();
+            ResourceRoutes = reader.LoadRoutes();
+
+            TurnData = GameObject.Find("TurnData").GetComponent<Text>();
+            PlayerData = GameObject.Find("PlayerInfo").GetComponent<Text>();
+
+            RpcDrawEventCard();
+            // announcements ** TODO online **
+            RpcDisplayInfo();
+        }
+    }
+
+    [ClientRpc]
+    void RpcDrawEventCard()
+    {
         // Draw an event card
         GameObject card = Instantiate(EventCard);
         card.transform.SetParent(GameObject.Find("MainScreen").transform);
-        announcement.SetText(month + " Q" + (quarter + 1));
-        announcement.transform.SetAsLastSibling();
-        PlayerAnnouncement.SetText("UK's Turn");
-        PlayerAnnouncement.transform.SetAsLastSibling();
-        VictoryPoints.text = "0 Victory Points";
+        NetworkServer.Spawn(card);
     }
 
     // Function used for finding specific attack vectors
@@ -92,8 +127,6 @@ public class GameManager : NetworkBehaviour
         {
             GameObject.Find("UK Government").GetComponent<Entity>().Resources += 3;
             GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
-            PlayerAnnouncement.SetText("UK's Turn");
-            PlayerAnnouncement.transform.SetAsLastSibling();
             VictoryPoints.text = (player.VictoryPoints + " Victory Points");
         }
         else
@@ -101,8 +134,6 @@ public class GameManager : NetworkBehaviour
             if (!(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6))
                 GameObject.Find("Russian Government").GetComponent<Entity>().Resources += 3;
             GameObject.Find("Russian Government").GetComponent<Entity>().UpdateInterface();
-            PlayerAnnouncement.SetText("Russia's Turn");
-            PlayerAnnouncement.transform.SetAsLastSibling();
             VictoryPoints.text = (enemy.VictoryPoints + " Victory Points");
         }
         Turns++;
@@ -115,8 +146,18 @@ public class GameManager : NetworkBehaviour
             GameObject card = Instantiate(EventCard);
             card.transform.SetParent(GameObject.Find("MainScreen").transform);
         }
-        announcement.SetText(month + " Q" + (quarter + 1));
-        announcement.transform.SetAsLastSibling();
+        RpcDisplayInfo();
+    }
+
+    // Display info about this turn
+    [ClientRpc]
+    void RpcDisplayInfo()
+    {
+        if (PlayerTurn)
+            PlayerData.text = "UK's Turn";
+        else
+            PlayerData.text = "Russia's Turn";
+        TurnData.text = month + " Q" + (quarter + 1);
     }
 
     public void EndGame()

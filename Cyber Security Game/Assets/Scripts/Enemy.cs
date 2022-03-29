@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 
-public class Enemy : MonoBehaviour
+public class Enemy : NetworkBehaviour
 {
     public int VictoryPoints = 0;
     int RosenergoatomVitality = 0;
@@ -16,7 +16,15 @@ public class Enemy : MonoBehaviour
     {
         transform.parent = GameObject.Find("MainScreen").transform;
         transform.localPosition = new Vector3(34.50063f, -50, 0);
+        CmdPlayerLoaded();
     }
+
+    [Command]
+    void CmdPlayerLoaded()
+    {
+        GameObject.Find("GameManager").GetComponent<GameManager>().PlayerLoaded();
+    }
+
 
     public void TurnUpdate()
     {

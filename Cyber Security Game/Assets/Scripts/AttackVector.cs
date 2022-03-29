@@ -8,6 +8,13 @@ public class AttackVector
     public string From;
     public bool Enabled;
 
+    public AttackVector()
+    {
+        To = "None";
+        From = "None";
+        Enabled = false;
+    }
+
     public AttackVector(string to, string from, string enabled)
     {
         To = to;

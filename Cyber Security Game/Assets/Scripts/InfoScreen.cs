@@ -17,7 +17,7 @@ public class InfoScreen : MonoBehaviour
 
     public void Show(int i)
     {
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        manager = FindObjectOfType<GameManager>();
         if (i < 5 && i >= 0 && manager.PlayerTurn)
         {
             GetComponent<Image>().sprite = infoImg[i];

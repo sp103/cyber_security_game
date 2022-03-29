@@ -11,14 +11,21 @@ public class Player : NetworkBehaviour
     int GCHQQuarters = 0;
     public Text VictoryPointText;
     public GameObject ReportScreen;
+    // keep track of the quarter
     int quarter = 0;
     // black market defence card, true once played
     public bool PLCDefence = false;
 
-    private void Start()
+    private void Awake()
     {
         transform.parent = GameObject.Find("MainScreen").transform;
         transform.localPosition = new Vector3(34.5f, -30, 0);
+    }
+
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+        FindObjectOfType<GameManager>().PlayerLoaded();
     }
 
     public void TurnUpdate()

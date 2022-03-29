@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class Entity : MonoBehaviour, IDropHandler {
 
-    public GameObject input;
+    // num input prefab
+    public GameObject numInput;
     public double Vitality;
     public int Resources;
     public GameManager GameManager;
@@ -30,13 +31,13 @@ public class Entity : MonoBehaviour, IDropHandler {
 
     void Start()
     {
-        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        GameManager = FindObjectOfType<GameManager>();
     }
 
     // Function called when dragged to from another object
     public void OnDrop(PointerEventData eventData)
     {
-        if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")&& !paralysed)
+        if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)")&& !paralysed)
         {
             // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
             if (eventData.pointerDrag.tag == "Entity")
@@ -44,27 +45,24 @@ public class Entity : MonoBehaviour, IDropHandler {
                 if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
                 {
                     // check if event card is blocking uk resource transfer
-                    if (!(transform.parent.name == "PlayerArea" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
+                    if (!(transform.parent.name == "PlayerArea(Clone)" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
                     {
-                        input.GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
-                        Debug.Log("resource route found");
+                        Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
                     }
                 }
             }
             else if ((eventData.pointerDrag.tag == "Revitalise") && !revitalised)
             {
-                input.GetComponent<NumInput>().SetEntity(this, "revitalise");
-                Debug.Log("revitalising");
+                Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "revitalise");
             }
         }
-        else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea")
+        else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)")
         {
             if (eventData.pointerDrag.tag == "Entity" && DamageMultiplier != 0)
             {
                 if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
                 {
-                    input.GetComponent<NumInput>().SetEntity(this, "attack", eventData.pointerDrag.GetComponent<Entity>());
-                    Debug.Log("attack vector found");
+                    Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "attack", eventData.pointerDrag.GetComponent<Entity>());
                 }
             }
         }
@@ -135,7 +133,6 @@ public class Entity : MonoBehaviour, IDropHandler {
         {
             from.Resources -= amount;
             Resources += amount;
-            Debug.Log(amount + " transfered from " + from.name + " to " + this.name);
         }
         if (from.name == "Electorate")
             GameObject.Find("PlayerArea").GetComponent<Player>().VictoryPoints--;

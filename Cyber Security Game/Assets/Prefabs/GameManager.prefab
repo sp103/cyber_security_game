@@ -50,7 +50,7 @@ MonoBehaviour:
   Turns: 0
   PlayerTurn: 1
   EventCard: {fileID: 1477161622339551396, guid: 194f23b54c195d942b17ffa8287032b0, type: 3}
-  announcement: {fileID: 0}
-  PlayerAnnouncement: {fileID: 0}
+  TurnData: {fileID: 0}
+  PlayerData: {fileID: 0}
   VictoryPoints: {fileID: 0}
   BlackMarket: {fileID: 0}

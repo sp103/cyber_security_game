@@ -52,14 +52,14 @@ public class EventCard : MonoBehaviour
             break;
             case 7:
                 // Quantum Breakthrough
-                foreach (Transform child in GameObject.Find("PlayerArea").transform)
+                foreach (Transform child in GameObject.Find("PlayerArea(Clone)").transform)
                 {
                     Entity entity = child.GetComponent<Entity>();
                     entity.Resources += 1;
                     entity.Vitality += 1;
                     entity.UpdateInterface();
                 }
-                foreach (Transform child in GameObject.Find("EnemyArea").transform)
+                foreach (Transform child in GameObject.Find("EnemyArea(Clone)").transform)
                 {
                     Entity entity = child.GetComponent<Entity>();
                     entity.Resources += 1;
