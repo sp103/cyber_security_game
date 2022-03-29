@@ -19,9 +19,10 @@ public class GameManager : MonoBehaviour
     string[] months = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     string month = "January";
     int quarter;
-    public Announcement announcement;
-    public Announcement PlayerAnnouncement;
-    public Text VictoryPoints;
+    public Text TurnInfo;
+    public Text PlayerInfo;
+    public Text PlayerVictoryPoints;
+    public Text EnemyVictoryPoints;
     public GameObject BlackMarket;
 
     private void Start()
@@ -36,11 +37,7 @@ public class GameManager : MonoBehaviour
         // Draw an event card
         GameObject card = Instantiate(EventCard);
         card.transform.SetParent(GameObject.Find("MainScreen").transform);
-        announcement.SetText(month + " Q" + (quarter + 1));
-        announcement.transform.SetAsLastSibling();
-        PlayerAnnouncement.SetText("UK's Turn");
-        PlayerAnnouncement.transform.SetAsLastSibling();
-        VictoryPoints.text = "0 Victory Points";
+        DisplayInfo();
     }
 
     // Function used for finding specific attack vectors
@@ -89,18 +86,12 @@ public class GameManager : MonoBehaviour
         {
             GameObject.Find("UK Government").GetComponent<Entity>().Resources += 3;
             GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
-            PlayerAnnouncement.SetText("UK's Turn");
-            PlayerAnnouncement.transform.SetAsLastSibling();
-            VictoryPoints.text = (player.VictoryPoints + " Victory Points");
         }
         else
         {
             if (!(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6))
                 GameObject.Find("Russian Government").GetComponent<Entity>().Resources += 3;
             GameObject.Find("Russian Government").GetComponent<Entity>().UpdateInterface();
-            PlayerAnnouncement.SetText("Russia's Turn");
-            PlayerAnnouncement.transform.SetAsLastSibling();
-            VictoryPoints.text = (enemy.VictoryPoints + " Victory Points");
         }
         Turns++;
         month = months[Turns / 2];
@@ -112,12 +103,28 @@ public class GameManager : MonoBehaviour
             GameObject card = Instantiate(EventCard);
             card.transform.SetParent(GameObject.Find("MainScreen").transform);
         }
-        announcement.SetText(month + " Q" + (quarter + 1));
-        announcement.transform.SetAsLastSibling();
+        DisplayInfo();
     }
 
     public void EndGame()
     {
         Debug.Log("Game Ended");
+    }
+
+    void DisplayInfo()
+    {
+        TurnInfo.text = month + " Q" + (quarter + 1);
+        if (PlayerTurn)
+        {
+            PlayerInfo.text = "UK's Turn";
+            PlayerVictoryPoints.text = "You have " + player.VictoryPoints.ToString() + " victory points";
+            EnemyVictoryPoints.text = "Russia has " + enemy.VictoryPoints.ToString() + " victory points";
+        }
+        else
+        {
+            PlayerInfo.text = "Russia's Turn";
+            PlayerVictoryPoints.text = "You have " + enemy.VictoryPoints.ToString() + " victory points";
+            EnemyVictoryPoints.text = "UK has " + player.VictoryPoints.ToString() + " victory points";
+        }
     }
 }
