@@ -70,14 +70,18 @@ public class NumInput : MonoBehaviour
     public void EnterValue()
     {
         if (function == "revitalise")
+        {
             entity.Revitalise(int.Parse(input.text));
+        }
         else if (function == "transfer")
+        {
             entity.Transfer(fromEntity, int.Parse(input.text));
+        }
         else if (function == "attack")
         {
-            Vector3 result = entity.Attack(fromEntity, ((int)AttackSlider.value + 1));
+            // Vector3 result = entity.Attack(fromEntity, ((int)AttackSlider.value + 1));
             AttackSlider.value = 0;
-            reportScreen.transform.GetChild(1).GetComponent<Text>().text = ("Attack Report \n\n\n Attack launched from " + fromEntity.name + " to " + entity.name + "\n\n You rolled a " + result.x + "\n\n You suffered " + result.y + " damage \n\n" + entity.name + " suffered " + result.z + " damage");
+            // reportScreen.transform.GetChild(1).GetComponent<Text>().text = ("Attack Report \n\n\n Attack launched from " + fromEntity.name + " to " + entity.name + "\n\n You rolled a " + result.x + "\n\n You suffered " + result.y + " damage \n\n" + entity.name + " suffered " + result.z + " damage");
             reportScreen.GetComponent<OpenScreen>().show();
         }
         //Hide();

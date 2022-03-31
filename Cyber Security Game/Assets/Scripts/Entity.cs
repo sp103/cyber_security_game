@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Mirror;
 
-public class Entity : MonoBehaviour, IDropHandler {
+public class Entity : NetworkBehaviour, IDropHandler {
 
     // num input prefab
     public GameObject numInput;
+
+    public InfoScreen infoScreen;
     public double Vitality;
     public int Resources;
     public GameManager GameManager;
@@ -29,40 +32,40 @@ public class Entity : MonoBehaviour, IDropHandler {
     public int paralysedTurns = 0;
     bool revitalised = false;
 
-    void Start()
-    {
-        GameManager = FindObjectOfType<GameManager>();
-    }
-
     // Function called when dragged to from another object
     public void OnDrop(PointerEventData eventData)
     {
-        if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)")&& !paralysed)
+        if (transform.parent.GetComponent<NetworkIdentity>().hasAuthority)
         {
-            // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
-            if (eventData.pointerDrag.tag == "Entity")
+            if (GameManager == null)
+                GameManager = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
+            if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)") && !paralysed)
             {
-                if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
+                // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
+                if (eventData.pointerDrag.tag == "Entity")
                 {
-                    // check if event card is blocking uk resource transfer
-                    if (!(transform.parent.name == "PlayerArea(Clone)" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
+                    if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
                     {
-                        Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
+                        // check if event card is blocking uk resource transfer
+                        if (!(transform.parent.name == "PlayerArea(Clone)" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
+                        {
+                            Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
+                        }
                     }
                 }
-            }
-            else if ((eventData.pointerDrag.tag == "Revitalise") && !revitalised)
-            {
-                Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "revitalise");
-            }
-        }
-        else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)")
-        {
-            if (eventData.pointerDrag.tag == "Entity" && DamageMultiplier != 0)
-            {
-                if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
+                else if ((eventData.pointerDrag.tag == "Revitalise") && !revitalised)
                 {
-                    Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "attack", eventData.pointerDrag.GetComponent<Entity>());
+                    Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "revitalise");
+                }
+            }
+            else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)")
+            {
+                if (eventData.pointerDrag.tag == "Entity" && DamageMultiplier != 0)
+                {
+                    if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
+                    {
+                        Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "attack", eventData.pointerDrag.GetComponent<Entity>());
+                    }
                 }
             }
         }
@@ -125,6 +128,7 @@ public class Entity : MonoBehaviour, IDropHandler {
         }
         return Vector3.zero;
     }
+
 
     // Function used to transfer the entered amount from the entered entity to this entity
     public void Transfer(Entity from, int amount)
@@ -199,5 +203,11 @@ public class Entity : MonoBehaviour, IDropHandler {
         else if (paralysed)
             paralysed = false;
         revitalised = false;
+    }
+
+    public void ShowInfo()
+    {
+        if(transform.parent.GetComponent<NetworkIdentity>().hasAuthority)
+            infoScreen.Show(name);
     }
 }

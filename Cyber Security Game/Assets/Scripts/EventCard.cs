@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class EventCard : MonoBehaviour
+public class EventCard : NetworkBehaviour
 {
     public Sprite[] cardImages = new Sprite[9];
     public bool maximised;
     public int card = 8;
 
     // Start is called before the first frame update
-    void Start()
+    public void SetCard(int cardNo)
     {
-        card = Random.Range(0, 9);
+        card = cardNo;
         GetComponent<Image>().sprite = cardImages[card];
         Maximise();
         CardEffect(card);

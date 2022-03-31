@@ -11,20 +11,31 @@ public class Enemy : NetworkBehaviour
     int RosenergoatomMonths = 0;
     double BearVitality = 0;
     public Text text;
+    GameManager manager;
+    public GameObject gameManager;
 
-    private void Start()
+    public override void OnStartAuthority()
     {
-        transform.parent = GameObject.Find("MainScreen").transform;
-        transform.localPosition = new Vector3(34.50063f, -50, 0);
-        CmdPlayerLoaded();
+        base.OnStartAuthority();
+        cmdStarter();
     }
 
     [Command]
-    void CmdPlayerLoaded()
+    void cmdStarter()
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>().PlayerLoaded();
+        GameObject man = Instantiate(gameManager);
+        manager = man.GetComponent<GameManager>();
+        NetworkServer.Spawn(man, connectionToClient);
+        manager.PlayerLoaded(gameObject);
+        RpcSetPosition();
     }
 
+    [ClientRpc]
+    void RpcSetPosition()
+    {
+        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.localPosition = new Vector3(34.5f, -50, 0);
+    }
 
     public void TurnUpdate()
     {
@@ -51,7 +62,7 @@ public class Enemy : NetworkBehaviour
 
         if (month == "March" || month == "June" || month == "September" || month == "December")
             QuarterlyUpdate();
-        text.text = (VictoryPoints + " Russian Victory Points");
+        //text.text = (VictoryPoints + " Russian Victory Points");
     }
 
     public void QuarterlyUpdate()

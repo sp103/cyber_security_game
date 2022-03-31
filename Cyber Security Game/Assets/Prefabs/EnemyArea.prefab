@@ -856,10 +856,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
-          m_TargetAssemblyTypeName: InfoScreen, Assembly-CSharp
-          m_MethodName: Show
-          m_Mode: 3
+        - m_Target: {fileID: 5418039359937162633}
+          m_TargetAssemblyTypeName: Entity, Assembly-CSharp
+          m_MethodName: ShowInfo
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -881,6 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
+  infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0
   Resources: 0
   GameManager: {fileID: 0}
@@ -930,6 +931,7 @@ GameObject:
   - component: {fileID: 5418039360738843913}
   - component: {fileID: 1299046601}
   - component: {fileID: 4020012125257219605}
+  - component: {fileID: -3302703928057593336}
   m_Layer: 0
   m_Name: EnemyArea
   m_TagString: Untagged
@@ -972,6 +974,7 @@ MonoBehaviour:
   syncInterval: 0.1
   VictoryPoints: 0
   text: {fileID: 0}
+  gameManager: {fileID: 5377115763245884866, guid: 1b480b4ddda2eac4caab65cd180fb0de, type: 3}
 --- !u!114 &4020012125257219605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,6 +992,40 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 1bcc4b26de1e1ad4f826cea30465daf2
   hasSpawned: 0
+--- !u!114 &-3302703928057593336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418039360232489754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &5418039360998896294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,10 +1092,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
-          m_TargetAssemblyTypeName: InfoScreen, Assembly-CSharp
-          m_MethodName: Show
-          m_Mode: 3
+        - m_Target: {fileID: 5418039360998896292}
+          m_TargetAssemblyTypeName: Entity, Assembly-CSharp
+          m_MethodName: ShowInfo
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1080,6 +1117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
+  infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0
   Resources: 0
   GameManager: {fileID: 0}
@@ -1184,10 +1222,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
-          m_TargetAssemblyTypeName: InfoScreen, Assembly-CSharp
-          m_MethodName: Show
-          m_Mode: 3
+        - m_Target: {fileID: 5418039361137771852}
+          m_TargetAssemblyTypeName: Entity, Assembly-CSharp
+          m_MethodName: ShowInfo
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1209,6 +1247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
+  infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0
   Resources: 0
   GameManager: {fileID: 0}
@@ -1313,10 +1352,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
-          m_TargetAssemblyTypeName: InfoScreen, Assembly-CSharp
-          m_MethodName: Show
-          m_Mode: 3
+        - m_Target: {fileID: 5418039361268531735}
+          m_TargetAssemblyTypeName: Entity, Assembly-CSharp
+          m_MethodName: ShowInfo
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1338,6 +1377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
+  infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0
   Resources: 0
   GameManager: {fileID: 0}
@@ -1442,10 +1482,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
-          m_TargetAssemblyTypeName: InfoScreen, Assembly-CSharp
-          m_MethodName: Show
-          m_Mode: 3
+        - m_Target: {fileID: 5418039361518973618}
+          m_TargetAssemblyTypeName: Entity, Assembly-CSharp
+          m_MethodName: ShowInfo
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1467,6 +1507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
+  infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0
   Resources: 0
   GameManager: {fileID: 0}

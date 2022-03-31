@@ -15,17 +15,33 @@ public class Player : NetworkBehaviour
     int quarter = 0;
     // black market defence card, true once played
     public bool PLCDefence = false;
-
-    private void Awake()
-    {
-        transform.parent = GameObject.Find("MainScreen").transform;
-        transform.localPosition = new Vector3(34.5f, -30, 0);
-    }
+    GameManager manager;
+    public GameObject gameManager;
 
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
-        FindObjectOfType<GameManager>().PlayerLoaded();
+        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.localPosition = new Vector3(34.5f, -30, 0);
+        cmdStarter();
+    }
+
+    [Command]
+    void cmdStarter()
+    {
+        GameObject man = Instantiate(gameManager);
+        manager = man.GetComponent<GameManager>();
+        NetworkServer.Spawn(man, connectionToClient);
+        manager.PlayerLoaded(gameObject);
+        RpcSetPosition();
+    }
+
+
+    [ClientRpc]
+    void RpcSetPosition()
+    {
+        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.localPosition = new Vector3(34.5f, -30, 0);
     }
 
     public void TurnUpdate()
@@ -50,7 +66,7 @@ public class Player : NetworkBehaviour
             VictoryPoints += 4;
         if (month == "March" || month == "June" || month == "September" || month == "December")
             QuarterlyUpdate();
-        VictoryPointText.text = (VictoryPoints + " UK Victory Points");
+        //VictoryPointText.text = (VictoryPoints + " UK Victory Points");
     }
     public void QuarterlyUpdate()
     {

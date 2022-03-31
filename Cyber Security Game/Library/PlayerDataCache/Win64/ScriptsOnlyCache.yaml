@@ -6,6 +6,7 @@ ScriptsOnlyBuild:
     - BlackMarketItem
     - CustomNetworkLobby
     - Dragging
+    - EndTurn
     - Enemy
     - Entity
     - EventCard
@@ -120,17 +121,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5680}
     - Class: 114
-      Script: {instanceID: 5750}
+      Script: {instanceID: 5702}
     - Class: 114
-      Script: {instanceID: 5994}
+      Script: {instanceID: 5752}
     - Class: 114
-      Script: {instanceID: 6038}
+      Script: {instanceID: 5996}
     - Class: 114
-      Script: {instanceID: 6286}
+      Script: {instanceID: 6040}
     - Class: 114
-      Script: {instanceID: 6356}
+      Script: {instanceID: 6288}
     - Class: 114
-      Script: {instanceID: 6478}
+      Script: {instanceID: 6358}
+    - Class: 114
+      Script: {instanceID: 6480}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -250,13 +253,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5378}
     - Class: 114
-      Script: {instanceID: 5958}
+      Script: {instanceID: 5960}
     - Class: 114
-      Script: {instanceID: 5994}
+      Script: {instanceID: 5996}
     - Class: 114
-      Script: {instanceID: 6478}
+      Script: {instanceID: 6480}
     - Class: 114
-      Script: {instanceID: 6486}
+      Script: {instanceID: 6488}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -366,7 +369,7 @@ ScriptsOnlyBuild:
     className: LatencySimulation
   - hash:
       serializedVersion: 2
-      Hash: 51c59152f03c6355628cb58dc8474aae
+      Hash: 637ea80dd300a1b157880079045f9c36
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EventCard
@@ -696,7 +699,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 983f1b1db692ac880a5d4a5810edb212
+      Hash: 438b987a27c28d5850cce5cfbe3a5473
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Entity
@@ -750,7 +753,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: 79ab05a7d746d6120001430df26dc5bf
+      Hash: 56364e0d95ce9886e116a56e30c24682
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1044,7 +1047,7 @@ ScriptsOnlyBuild:
     className: TeamInterestManagement
   - hash:
       serializedVersion: 2
-      Hash: 867349dc3d7ea288ea66a826f8c90d1c
+      Hash: 6a15ab48dca804b93f5ac078345c1638
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -1152,6 +1155,12 @@ ScriptsOnlyBuild:
     className: PlayBlackMarketItem
   - hash:
       serializedVersion: 2
+      Hash: 6fd2bb55b3ee5edb6040a1c5bccd0e07
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EndTurn
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1218,7 +1227,7 @@ ScriptsOnlyBuild:
     className: CanvasUI
   - hash:
       serializedVersion: 2
-      Hash: 55afd9e745a4c646917f6ad58c8e2d89
+      Hash: 2e120030254290cdbf8d262360036537
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
