@@ -17,6 +17,7 @@ public class Player : NetworkBehaviour
     public bool PLCDefence = false;
     GameManager manager;
     public GameObject gameManager;
+    public GameObject[] entities = new GameObject[5];
 
     public override void OnStartAuthority()
     {
@@ -33,6 +34,12 @@ public class Player : NetworkBehaviour
         manager = man.GetComponent<GameManager>();
         NetworkServer.Spawn(man, connectionToClient);
         manager.PlayerLoaded(gameObject);
+        foreach (GameObject obj in entities)
+        {
+            GameObject entity = Instantiate(obj);
+            entity.transform.parent = transform;
+            NetworkServer.Spawn(entity);
+        }
         RpcSetPosition();
     }
 

@@ -18,7 +18,7 @@ public class OwnedBlackMarketItems : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        manager = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
     }
 
     public void OnEnable()

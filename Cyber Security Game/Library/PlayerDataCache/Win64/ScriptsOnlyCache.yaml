@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - Announcement
     - BlackMarket
     - BlackMarketItem
+    - BlackMarketScreen
     - CustomNetworkLobby
     - Dragging
     - EndTurn
@@ -134,6 +135,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 6358}
     - Class: 114
       Script: {instanceID: 6480}
+    - Class: 114
+      Script: {instanceID: 20054}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -699,7 +702,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 438b987a27c28d5850cce5cfbe3a5473
+      Hash: c7dd144ffd65dd4a258e9f44b515b00f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Entity
@@ -1173,7 +1176,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 1000588bec79bfcb242267e9c501aafd
+      Hash: 4ec97795550d1fbbcfc48ae2e1b4f647
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BlackMarketItem
@@ -1441,6 +1444,12 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
     className: NetworkRoomPlayerExt
+  - hash:
+      serializedVersion: 2
+      Hash: 9c5da985364b757abf8b35798d63ec87
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BlackMarketScreen
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity

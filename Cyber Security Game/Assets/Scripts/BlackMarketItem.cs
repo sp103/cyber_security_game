@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class BlackMarketItem : MonoBehaviour
+public class BlackMarketItem : NetworkBehaviour
 {
     // Game manager GameObject
     GameManager manager;
@@ -23,7 +24,7 @@ public class BlackMarketItem : MonoBehaviour
 
     private void Start()
     {
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        manager = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
         text = transform.GetChild(3).GetComponent<Announcement>();
         BidText = transform.GetChild(4).GetComponent<Text>();
         BidText.text = ("Min bid: " + MinBid);
