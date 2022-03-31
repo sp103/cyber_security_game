@@ -50,6 +50,12 @@ MonoBehaviour:
   VictoryPoints: 0
   text: {fileID: 0}
   gameManager: {fileID: 5377115763245884866, guid: 1b480b4ddda2eac4caab65cd180fb0de, type: 3}
+  entities:
+  - {fileID: 3475294464874553495, guid: 84c7766510820d845abd3ca867d53be2, type: 3}
+  - {fileID: 113074569532936470, guid: 94a8b5ac92f770648a21a2946e67edd6, type: 3}
+  - {fileID: 3793454228106962279, guid: f9644007cb2d9b340966ca651ebea553, type: 3}
+  - {fileID: 6847651149445963484, guid: 0f87f7d0fba116241913e871536d7771, type: 3}
+  - {fileID: 5329467775614241525, guid: e16f6002e097bfe42bbf258653fc6cb2, type: 3}
 --- !u!114 &4020012125257219605
 MonoBehaviour:
   m_ObjectHideFlags: 0

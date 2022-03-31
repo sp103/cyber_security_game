@@ -9,7 +9,7 @@ public class InfoScreen : MonoBehaviour
 
     public GameObject canvas;
     public Sprite[] infoImg = new Sprite[10];
-    string[] entities = {"UK Government","UK Energy","UK PLC","GCHQ","Electorate","Russian Government","Online Trolls","SCS","Energetic Bear","Rosenergoatom" };
+    string[] entities = { "UK Government(Clone)", "UK Energy(Clone)", "UK PLC(Clone)", "GCHQ(Clone)", "Electorate(Clone)", "Russian Government(Clone)", "Online Trolls(Clone)", "SCS(Clone)", "Energetic Bear(Clone)", "Rosenergoatom(Clone)" };
 
     public void Hide()
     {

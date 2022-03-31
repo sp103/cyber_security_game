@@ -52,6 +52,12 @@ MonoBehaviour:
   ReportScreen: {fileID: 0}
   PLCDefence: 0
   gameManager: {fileID: 5377115763245884866, guid: 1b480b4ddda2eac4caab65cd180fb0de, type: 3}
+  entities:
+  - {fileID: 2809087338389964965, guid: 3b1e5cd98d7ae864fbdd4fe60b11f5d0, type: 3}
+  - {fileID: 6078740974263615121, guid: b3488a5366c067b4c858245dd1ada466, type: 3}
+  - {fileID: 1853909136645170085, guid: cc94448094d831e4992385c8ca4aeaa4, type: 3}
+  - {fileID: 8559874720930744961, guid: dbc827e245cf2b64989d9988f5cac653, type: 3}
+  - {fileID: 3641332587960245572, guid: 1f056b56aff5dae468f1817625c61c3a, type: 3}
 --- !u!114 &3734568081795226098
 MonoBehaviour:
   m_ObjectHideFlags: 0

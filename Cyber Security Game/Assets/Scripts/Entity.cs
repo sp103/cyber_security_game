@@ -9,9 +9,10 @@ public class Entity : NetworkBehaviour, IDropHandler {
 
     // num input prefab
     public GameObject numInput;
-
     public InfoScreen infoScreen;
+    [SyncVar (hook = nameof(UpdateVitality))]
     public double Vitality;
+    [SyncVar (hook = nameof(UpdateResources))]
     public int Resources;
     public GameManager GameManager;
     readonly int[] one = new int[] { 0, 1, 1, 1, 1, 2 };
@@ -47,7 +48,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
                     if (GameManager.CheckResourceRoutes(name, eventData.pointerDrag.name))
                     {
                         // check if event card is blocking uk resource transfer
-                        if (!(transform.parent.name == "PlayerArea(Clone)" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
+                        if (!GameObject.Find("EventCard(Clone)") || !(transform.parent.name == "PlayerArea(Clone)" && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 3))
                         {
                             Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "transfer", eventData.pointerDrag.GetComponent<Entity>());
                         }
@@ -76,7 +77,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
     {
         if (from.Resources >= amount && amount <= 6)
         {
-            from.Resources -= amount;
+            from.CmdSetResources(-amount);
             int dice = Random.Range(0, 6);
             int attack = 0;
             Debug.Log(dice);
@@ -105,11 +106,11 @@ public class Entity : NetworkBehaviour, IDropHandler {
             int attackerDamage = 0;
             if (attack >= 0)
             {
-                this.Vitality -= attack * DamageMultiplier;
+                this.CmdSetVitality(-attack * DamageMultiplier);
             }
             else
             {
-                from.Vitality -= (attack * - 1);
+                from.CmdSetVitality(-(attack * - 1));
                 attackerDamage = attack * - 1;
                 attack = 0;
             }
@@ -118,12 +119,12 @@ public class Entity : NetworkBehaviour, IDropHandler {
             if (from.name == "Online Trolls" && (amount == 5 || amount == 6))
                 GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints -= 2;
             // check if uk plc defence card is active and give uk plc vitality if it is
-            if (name == "UK PLC" && attack > 0)
+            if (name == "UK PLC(Clone)" && attack > 0)
                 if (transform.parent.GetComponent<Player>().PLCDefence)
-                    Vitality++;
+                    CmdSetVitality(1);
             // update both entity's interfaces
-            UpdateInterface();
-            from.UpdateInterface();
+            //RpcUpdateInterface();
+            //from.RpcUpdateInterface();
             return new Vector3(dice, attackerDamage, attack);
         }
         return Vector3.zero;
@@ -135,13 +136,13 @@ public class Entity : NetworkBehaviour, IDropHandler {
     {
         if(from.Resources >= amount)
         {
-            from.Resources -= amount;
-            Resources += amount;
+            from.CmdSetResources(-amount);
+            CmdSetResources(amount);
         }
         if (from.name == "Electorate")
             GameObject.Find("PlayerArea").GetComponent<Player>().VictoryPoints--;
-        from.UpdateInterface();
-        UpdateInterface();
+        //from.RpcUpdateInterface();
+        //RpcUpdateInterface();
     }
 
     //Function that takes the entered amount of resources and turns it into vitality
@@ -152,45 +153,77 @@ public class Entity : NetworkBehaviour, IDropHandler {
             switch (cost)
             {
                 case 1:
-                    Vitality++;
-                    Resources -= cost;
+                    CmdSetVitality(1);
+                    CmdSetResources(-cost);
                     break;
 
                 case 2:
-                    Vitality += 2;
-                    Resources -= cost;
+                    CmdSetVitality(2);
+                    CmdSetResources(-cost);
                     break;
 
                 case 4:
-                    Vitality += 3;
-                    Resources -= cost;
+                    CmdSetVitality(3);
+                    CmdSetResources(-cost);
                     break;
 
                 case 5:
-                    Vitality += 4;
-                    Resources -= cost;
+                    CmdSetVitality(4);
+                    CmdSetResources(-cost);
                     break;
 
                 case 6:
-                    Vitality += 5;
-                    Resources -= cost;
+                    CmdSetVitality(5);
+                    CmdSetResources(-cost);
                     break;
 
                 case 7:
-                    Vitality += 6;
-                    Resources -= cost;
+                    CmdSetVitality(6);
+                    CmdSetResources(-cost);
                     break;
             }
             revitalised = true;
-            UpdateInterface();
+            //RpcUpdateInterface();
         }
     }
 
-    public void UpdateInterface()
+    public void SetResources(int resources)
     {
-        transform.GetChild(0).GetComponent<Text>().text = Vitality.ToString();
-        transform.GetChild(1).GetComponent<Text>().text = Resources.ToString();
+        CmdSetResources(resources);
     }
+
+    [Command]
+    void CmdSetResources(int resources)
+    {
+        Resources = Resources + resources;
+    }
+
+    public void SetVitality(int vitality)
+    {
+        CmdSetVitality(vitality);
+    }
+
+    [Command]
+    void CmdSetVitality(double vitality)
+    {
+        Vitality = Vitality + vitality;
+    }
+
+    void UpdateVitality(double oldVitality, double newVitality)
+    {
+        transform.GetChild(0).GetComponent<Text>().text = newVitality.ToString();
+    }
+
+    void UpdateResources(int oldResources, int newResources)
+    {
+        transform.GetChild(1).GetComponent<Text>().text = newResources.ToString();
+    }
+
+    //public void UpdateInterface()
+    //{
+    //    transform.GetChild(0).GetComponent<Text>().text = Vitality.ToString();
+    //    transform.GetChild(1).GetComponent<Text>().text = Resources.ToString();
+    //}
 
     public void TurnUpdate()
     {

@@ -12,6 +12,7 @@ public class GameManager : NetworkBehaviour
     public Enemy enemy;
 
     public int Turns = 0;
+    [SyncVar (hook = nameof(PlayerTurnUpdate))]
     public bool PlayerTurn = true;
 
     // Arrays for storing attack vectors and resource routes
@@ -48,8 +49,8 @@ public class GameManager : NetworkBehaviour
         // load data on all client instances
         RpcLoadDataOnClients();
         // if an event card has not already been drawen draw one
-        if (!GameObject.Find("EventCard(Clone)"))
-            DrawEventCard();
+        //if (!GameObject.Find("EventCard(Clone)"))
+        //    DrawEventCard();
         // display turn info on clients
         RpcDisplayInfo();
     }
@@ -129,6 +130,14 @@ public class GameManager : NetworkBehaviour
         return false;
     }
 
+    void PlayerTurnUpdate(bool oldTurn, bool newTurn)
+    {
+        if (newTurn)
+            GameObject.Find("UK Government(Clone)").GetComponent<Entity>().SetResources(3);
+        else
+            GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
+    }
+
 
     [Command]
     public void CmdEndTurn()
@@ -136,7 +145,10 @@ public class GameManager : NetworkBehaviour
         RpcEndTurn();
         RpcDisplayInfo();
         foreach (GameObject manager in GameObject.FindGameObjectsWithTag("GameManager"))
+        {
             manager.GetComponent<GameManager>().Turns++;
+            PlayerTurn = !PlayerTurn;
+        }
         if (Turns % 2 == 0)
             DrawEventCard();
     }
@@ -161,21 +173,18 @@ public class GameManager : NetworkBehaviour
         // end game after 24 turns
         if (Turns == 23) EndGame();
 
-        PlayerTurn = !PlayerTurn;
-        // give government entities resources at the start of next turn
-        if (PlayerTurn)
-        {
-            GameObject.Find("UK Government").GetComponent<Entity>().Resources += 3;
-            GameObject.Find("UK Government").GetComponent<Entity>().UpdateInterface();
-            //VictoryPoints.text = (player.VictoryPoints + " Victory Points");
-        }
-        else
-        {
-            if (!(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6))
-                GameObject.Find("Russian Government").GetComponent<Entity>().Resources += 3;
-            GameObject.Find("Russian Government").GetComponent<Entity>().UpdateInterface();
-            //VictoryPoints.text = (enemy.VictoryPoints + " Victory Points");
-        }
+        //// give government entities resources at the start of next turn
+        //if (PlayerTurn)
+        //{
+        //    GameObject.Find("UK Government(Clone)").GetComponent<Entity>().SetResources(3);
+        //}
+        //else
+        //{
+        //    if (GameObject.Find("EventCard(Clone)") && !(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6))
+        //    {
+        //        GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
+        //    }
+        //}
         // update number of turns
         Turns++;
         // update month and quarter based off turns

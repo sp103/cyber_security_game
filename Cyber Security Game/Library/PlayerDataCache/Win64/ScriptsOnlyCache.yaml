@@ -31,7 +31,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
@@ -90,9 +89,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1496}
     - Class: 114
-      Script: {instanceID: 1498}
-    - Class: 114
-      Script: {instanceID: 1502}
+      Script: {instanceID: 1500}
     - Class: 114
       Script: {instanceID: 2402}
     - Class: 114
@@ -112,31 +109,33 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3840}
     - Class: 114
-      Script: {instanceID: 4974}
+      Script: {instanceID: 4720}
     - Class: 114
-      Script: {instanceID: 5096}
+      Script: {instanceID: 4976}
     - Class: 114
-      Script: {instanceID: 5378}
+      Script: {instanceID: 4982}
     - Class: 114
-      Script: {instanceID: 5386}
+      Script: {instanceID: 5100}
     - Class: 114
-      Script: {instanceID: 5680}
+      Script: {instanceID: 5382}
     - Class: 114
-      Script: {instanceID: 5702}
+      Script: {instanceID: 5390}
     - Class: 114
-      Script: {instanceID: 5752}
+      Script: {instanceID: 5684}
     - Class: 114
-      Script: {instanceID: 5996}
+      Script: {instanceID: 5706}
     - Class: 114
-      Script: {instanceID: 6040}
+      Script: {instanceID: 5756}
     - Class: 114
-      Script: {instanceID: 6288}
+      Script: {instanceID: 6000}
     - Class: 114
-      Script: {instanceID: 6358}
+      Script: {instanceID: 6044}
     - Class: 114
-      Script: {instanceID: 6480}
+      Script: {instanceID: 6292}
     - Class: 114
-      Script: {instanceID: 20054}
+      Script: {instanceID: 6362}
+    - Class: 114
+      Script: {instanceID: 6484}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -173,9 +172,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2402}
     - Class: 114
-      Script: {instanceID: 4974}
+      Script: {instanceID: 4976}
     - Class: 114
-      Script: {instanceID: 5378}
+      Script: {instanceID: 5382}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -214,8 +213,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1498}
     - Class: 114
-      Script: {instanceID: 1500}
-    - Class: 114
       Script: {instanceID: 1720}
     - Class: 114
       Script: {instanceID: 2012}
@@ -248,21 +245,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4496}
     - Class: 114
-      Script: {instanceID: 4974}
+      Script: {instanceID: 4720}
     - Class: 114
-      Script: {instanceID: 5064}
+      Script: {instanceID: 4976}
     - Class: 114
-      Script: {instanceID: 5244}
+      Script: {instanceID: 5068}
     - Class: 114
-      Script: {instanceID: 5378}
+      Script: {instanceID: 5248}
     - Class: 114
-      Script: {instanceID: 5960}
+      Script: {instanceID: 5382}
     - Class: 114
-      Script: {instanceID: 5996}
+      Script: {instanceID: 5964}
     - Class: 114
-      Script: {instanceID: 6480}
+      Script: {instanceID: 6000}
     - Class: 114
-      Script: {instanceID: 6488}
+      Script: {instanceID: 6484}
+    - Class: 114
+      Script: {instanceID: 6492}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -292,12 +291,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GraphicRaycaster
-  - hash:
-      serializedVersion: 2
-      Hash: 699619b86d9359741a4f58540298c80b
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Text
   - hash:
       serializedVersion: 2
       Hash: 21a9c6dbf300fc1f6dc15ca7e2c39a37
@@ -702,7 +695,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: c7dd144ffd65dd4a258e9f44b515b00f
+      Hash: 438b987a27c28d5850cce5cfbe3a5473
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Entity
@@ -960,6 +953,12 @@ ScriptsOnlyBuild:
     className: Player
   - hash:
       serializedVersion: 2
+      Hash: 699619b86d9359741a4f58540298c80b
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Text
+  - hash:
+      serializedVersion: 2
       Hash: ad425eb6c32a6f6977115fef236ef55f
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.AdditiveScenes
@@ -982,6 +981,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: 9c5da985364b757abf8b35798d63ec87
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BlackMarketScreen
   - hash:
       serializedVersion: 2
       Hash: f5763415ffcb37f6278091eb8b77a954
@@ -1050,7 +1055,7 @@ ScriptsOnlyBuild:
     className: TeamInterestManagement
   - hash:
       serializedVersion: 2
-      Hash: 6a15ab48dca804b93f5ac078345c1638
+      Hash: ffecd6bafb80a8a560f1827b77c0026b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -1230,7 +1235,7 @@ ScriptsOnlyBuild:
     className: CanvasUI
   - hash:
       serializedVersion: 2
-      Hash: 2e120030254290cdbf8d262360036537
+      Hash: 38c74629e2c1c0b8817d9400eaaaf8c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -1444,12 +1449,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
     className: NetworkRoomPlayerExt
-  - hash:
-      serializedVersion: 2
-      Hash: 9c5da985364b757abf8b35798d63ec87
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: BlackMarketScreen
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity

@@ -22,25 +22,32 @@ public class Player : NetworkBehaviour
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
-        transform.parent = GameObject.Find("MainScreen").transform;
-        transform.localPosition = new Vector3(34.5f, -30, 0);
         cmdStarter();
     }
 
     [Command]
     void cmdStarter()
     {
+        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.localPosition = new Vector3(34.5f, -30, 0);
+        foreach (GameObject obj in entities)
+        {
+            GameObject entity = Instantiate(obj);
+            NetworkServer.Spawn(entity, connectionToClient);
+            entity.transform.parent = transform;
+            RpcEntityPosition(entity);
+        }
         GameObject man = Instantiate(gameManager);
         manager = man.GetComponent<GameManager>();
         NetworkServer.Spawn(man, connectionToClient);
         manager.PlayerLoaded(gameObject);
-        foreach (GameObject obj in entities)
-        {
-            GameObject entity = Instantiate(obj);
-            entity.transform.parent = transform;
-            NetworkServer.Spawn(entity);
-        }
         RpcSetPosition();
+    }
+
+    [ClientRpc]
+    void RpcEntityPosition(GameObject entity)
+    {
+        entity.transform.SetParent(transform);
     }
 
 

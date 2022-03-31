@@ -21,7 +21,7 @@ public class XmlReader
         SyncList<AttackVector> AttackVectors = new SyncList<AttackVector>();
         foreach (XmlNode vector in vectors)
         {
-            AttackVectors.Add(new AttackVector(vector["to"].InnerText, vector["from"].InnerText, vector["enabled"].InnerText));
+            AttackVectors.Add(new AttackVector(vector["to"].InnerText + "(Clone)", vector["from"].InnerText + "(Clone)", vector["enabled"].InnerText));
         }
         return AttackVectors;
     }
@@ -33,12 +33,12 @@ public class XmlReader
         SyncList<ResourceRoute> ResourceRoutes = new SyncList<ResourceRoute>();
         foreach (XmlNode route in routes)
         {
-            ResourceRoutes.Add(new ResourceRoute(route["to"].InnerText, route["from"].InnerText));
+            ResourceRoutes.Add(new ResourceRoute(route["to"].InnerText + "(Clone)", route["from"].InnerText + "(Clone)"));
         }
         foreach (XmlNode route in twoWay_routes)
         {
-            ResourceRoutes.Add(new ResourceRoute(route["to"].InnerText, route["from"].InnerText));
-            ResourceRoutes.Add(new ResourceRoute(route["from"].InnerText, route["to"].InnerText));
+            ResourceRoutes.Add(new ResourceRoute(route["to"].InnerText + "(Clone)", route["from"].InnerText + "(Clone)"));
+            ResourceRoutes.Add(new ResourceRoute(route["from"].InnerText + "(Clone)", route["to"].InnerText + "(Clone)"));
         }
         return ResourceRoutes;
     }
