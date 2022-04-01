@@ -37,9 +37,7 @@ public class Player : NetworkBehaviour
             entity.transform.parent = transform;
             RpcEntityPosition(entity);
         }
-        GameObject man = Instantiate(gameManager);
-        manager = man.GetComponent<GameManager>();
-        NetworkServer.Spawn(man, connectionToClient);
+        manager = FindObjectOfType<GameManager>();
         manager.PlayerLoaded(gameObject);
         RpcSetPosition();
     }
@@ -56,6 +54,13 @@ public class Player : NetworkBehaviour
     {
         transform.parent = GameObject.Find("MainScreen").transform;
         transform.localPosition = new Vector3(34.5f, -30, 0);
+    }
+
+    [Command]
+    public void CmdEndTurn()
+    {
+        if (manager.PlayerTurn)
+            manager.SvrEndTurn();
     }
 
     public void TurnUpdate()

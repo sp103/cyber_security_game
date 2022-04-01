@@ -36,11 +36,9 @@ public class Entity : NetworkBehaviour, IDropHandler {
     // Function called when dragged to from another object
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.parent.GetComponent<NetworkIdentity>().hasAuthority)
-        {
             if (GameManager == null)
-                GameManager = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
-            if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)") && !paralysed)
+                GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            if ((GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || !GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)") && !paralysed && hasAuthority)
             {
                 // if eventData.pointerDrag tag = entity the playermanager should be checked for attack vectors and resource routes
                 if (eventData.pointerDrag.tag == "Entity")
@@ -59,7 +57,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
                     Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "revitalise");
                 }
             }
-            else if (!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)")
+            else if ((!GameManager.PlayerTurn && this.transform.parent.name == "PlayerArea(Clone)" || GameManager.PlayerTurn && this.transform.parent.name == "EnemyArea(Clone)") && !hasAuthority)
             {
                 if (eventData.pointerDrag.tag == "Entity" && DamageMultiplier != 0)
                 {
@@ -69,7 +67,6 @@ public class Entity : NetworkBehaviour, IDropHandler {
                     }
                 }
             }
-        }
     }
 
     // Function that attacks this entity from the entered entity with the entered amount of resources
@@ -192,7 +189,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
         CmdSetResources(resources);
     }
 
-    [Command]
+    [Command (requiresAuthority = false)]
     void CmdSetResources(int resources)
     {
         Resources = Resources + resources;
@@ -203,7 +200,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
         CmdSetVitality(vitality);
     }
 
-    [Command]
+    [Command (requiresAuthority = false)]
     void CmdSetVitality(double vitality)
     {
         Vitality = Vitality + vitality;

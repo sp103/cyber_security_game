@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class EndTurn : NetworkBehaviour
+public class EndTurn : MonoBehaviour
 {
     public void Clicked()
     {
-        foreach (GameObject manager in GameObject.FindGameObjectsWithTag("GameManager"))
-            if (manager.GetComponent<NetworkIdentity>().hasAuthority)
-                if((manager.GetComponent<GameManager>().PlayerTurn && GameObject.Find("PlayerArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority) || (!manager.GetComponent<GameManager>().PlayerTurn && GameObject.Find("EnemyArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority))
-                    manager.GetComponent<GameManager>().CmdEndTurn();
+        GameManager manager = FindObjectOfType<GameManager>();
+        if (GameObject.Find("PlayerArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority)
+            GameObject.Find("PlayerArea(Clone)").GetComponent<Player>().CmdEndTurn();
+        else if (GameObject.Find("EnemyArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority)
+            GameObject.Find("EnemyArea(Clone)").GetComponent<Enemy>().CmdEndTurn();
     }
 }

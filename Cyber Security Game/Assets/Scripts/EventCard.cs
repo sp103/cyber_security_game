@@ -26,39 +26,52 @@ public class EventCard : NetworkBehaviour
             case 0:
                 // Nuclear Meltdown
                 Entity UkEnergy = GameObject.Find("UK Energy(Clone)").GetComponent <Entity>();
-                UkEnergy.SetVitality(-1);
+                if (UkEnergy.hasAuthority)
+                    UkEnergy.SetVitality(-1);
             break;
             case 1:
                 // Clumsy civil servant
                 Entity UkGov = GameObject.Find("UK Government(Clone)").GetComponent<Entity>();
-                UkGov.SetResources(-2);
+                if (UkGov.hasAuthority)
+                    UkGov.SetResources(-2);
                 Entity Electorate = GameObject.Find("Electorate(Clone)").GetComponent<Entity>();
-                Electorate.SetVitality(-1);
+                if (Electorate.hasAuthority)
+                    Electorate.SetVitality(-1);
                 break;
             case 2:
                 // Software Update
                 Entity UkPlc = GameObject.Find("UK PLC(Clone)").GetComponent<Entity>();
-                UkPlc.SetVitality(-2);
+                if (UkPlc.hasAuthority)
+                    UkPlc.SetVitality(-2);
                 break;
             case 5:
                 // Lax Opsec
                 Entity RussainGov = GameObject.Find("Russian Government(Clone)").GetComponent<Entity>();
-                RussainGov.SetResources(-1);
-                RussainGov.SetVitality(-1);
+                if (RussainGov.hasAuthority)
+                {
+                    RussainGov.SetResources(-1);
+                    RussainGov.SetVitality(-1);
+                }
                 break;
             case 7:
                 // Quantum Breakthrough
                 foreach (Transform child in GameObject.Find("PlayerArea(Clone)").transform)
                 {
                     Entity entity = child.GetComponent<Entity>();
-                    entity.SetResources(1);
-                    entity.SetVitality(1);
+                    if (entity.hasAuthority)
+                    {
+                        entity.SetResources(1);
+                        entity.SetVitality(1);
+                    }
                 }
                 foreach (Transform child in GameObject.Find("EnemyArea(Clone)").transform)
                 {
                     Entity entity = child.GetComponent<Entity>();
-                    entity.SetResources(1);
-                    entity.SetVitality(1);
+                    if (entity.hasAuthority)
+                    {
+                        entity.SetResources(1);
+                        entity.SetVitality(1);
+                    }
                 }
                 break;
         }

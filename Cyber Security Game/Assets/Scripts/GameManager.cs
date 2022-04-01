@@ -10,7 +10,7 @@ public class GameManager : NetworkBehaviour
     public Player player;
     // reference to russian player
     public Enemy enemy;
-
+    [SyncVar]
     public int Turns = 0;
     [SyncVar (hook = nameof(PlayerTurnUpdate))]
     public bool PlayerTurn = true;
@@ -25,8 +25,10 @@ public class GameManager : NetworkBehaviour
     // event card prefab
     public GameObject EventCard;
     string[] months = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-    string month = "January";
-    int quarter;
+    [SyncVar (hook = nameof(MonthChange))]
+    public string month = "January";
+    [SyncVar]
+    public int quarter;
 
     // text objects for displaying turn info to players
     public Text TurnData;
@@ -40,19 +42,22 @@ public class GameManager : NetworkBehaviour
     [Server]
     public void PlayerLoaded(GameObject calledFrom)
     {
-        if (calledFrom.name == "PlayerArea(Clone)")
-            player = calledFrom.GetComponent<Player>();
-        if (calledFrom.name == "EnemyArea(Clone)")
-            enemy = calledFrom.GetComponent<Enemy>();
-        // load data on server instance
-        LoadData();
-        // load data on all client instances
-        RpcLoadDataOnClients();
-        // if an event card has not already been drawen draw one
-        //if (!GameObject.Find("EventCard(Clone)"))
-        //    DrawEventCard();
-        // display turn info on clients
-        RpcDisplayInfo();
+        if (NetworkServer.connections.Count == 2)
+        {
+            if (calledFrom.name == "PlayerArea(Clone)")
+                player = calledFrom.GetComponent<Player>();
+            if (calledFrom.name == "EnemyArea(Clone)")
+                enemy = calledFrom.GetComponent<Enemy>();
+            // load data on server instance
+            LoadData();
+            // load data on all client instances
+            RpcLoadDataOnClients();
+            // if an event card has not already been drawen draw one
+            //if (!GameObject.Find("EventCard(Clone)"))
+            //    DrawEventCard();
+            // display turn info on clients
+            RpcDisplayInfo();
+        }
     }
 
     // function that calls LoadData on all clients
@@ -133,31 +138,46 @@ public class GameManager : NetworkBehaviour
     void PlayerTurnUpdate(bool oldTurn, bool newTurn)
     {
         if (newTurn)
-            GameObject.Find("UK Government(Clone)").GetComponent<Entity>().SetResources(3);
+        {
+            if (player.GetComponent<NetworkIdentity>().hasAuthority)
+                GameObject.Find("UK Government(Clone)").GetComponent<Entity>().SetResources(3);
+        }
         else
-            GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
+        {
+            //if (!GameObject.Find("EventCard(Clone)") || (GameObject.Find("EventCard(Clone)") && !(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6)))
+            if (enemy.GetComponent<NetworkIdentity>().hasAuthority)
+                GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
+        }
+        DisplayInfo();
+    }
+
+    void MonthChange(string oldMonth, string newMonth)
+    {
+        DisplayInfo();
     }
 
 
-    [Command]
-    public void CmdEndTurn()
+    [Server]
+    public void SvrEndTurn()
     {
-        RpcEndTurn();
-        RpcDisplayInfo();
-        foreach (GameObject manager in GameObject.FindGameObjectsWithTag("GameManager"))
+        player.TurnUpdate();
+        enemy.TurnUpdate();
+        if (Turns % 2 == 1)
         {
-            manager.GetComponent<GameManager>().Turns++;
-            PlayerTurn = !PlayerTurn;
+            player.MonthlyUpdate(month);
+            enemy.MonthlyUpdate(month);
         }
+        // BlackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
+        // end game after 24 turns
+        if (Turns == 23) EndGame();
+        PlayerTurn = !PlayerTurn;
+        // update month and quarter based off turns
+        month = months[(Turns + 1) / 2];
+        quarter = (Turns + 1) / 6;
+        Turns++;
         if (Turns % 2 == 0)
             DrawEventCard();
-    }
-
-    [ClientRpc]
-    public void RpcEndTurn()
-    {
-        foreach (GameObject manager in GameObject.FindGameObjectsWithTag("GameManager"))
-            manager.GetComponent<GameManager>().EndTurn();
+        RpcDisplayInfo();
     }
 
     public void EndTurn()
@@ -173,19 +193,6 @@ public class GameManager : NetworkBehaviour
         // end game after 24 turns
         if (Turns == 23) EndGame();
 
-        //// give government entities resources at the start of next turn
-        //if (PlayerTurn)
-        //{
-        //    GameObject.Find("UK Government(Clone)").GetComponent<Entity>().SetResources(3);
-        //}
-        //else
-        //{
-        //    if (GameObject.Find("EventCard(Clone)") && !(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6))
-        //    {
-        //        GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
-        //    }
-        //}
-        // update number of turns
         Turns++;
         // update month and quarter based off turns
         month = months[Turns / 2];
@@ -195,6 +202,11 @@ public class GameManager : NetworkBehaviour
     // Display info about this turn
     [ClientRpc]
     void RpcDisplayInfo()
+    {
+        DisplayInfo();
+    }
+
+    void DisplayInfo()
     {
         if (PlayerTurn)
             PlayerData.text = "UK's Turn";

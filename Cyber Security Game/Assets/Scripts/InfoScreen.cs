@@ -19,7 +19,7 @@ public class InfoScreen : MonoBehaviour
     public void Show(string entity)
     {
         int entityID = Array.FindIndex(entities, row => row.Contains(entity));
-        GameManager manager = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
+        GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         GetComponent<Image>().sprite = infoImg[entityID];
         Instantiate(canvas, new Vector3(0, 0, 0), Quaternion.identity);
     }

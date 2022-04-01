@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Scene
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -45,10 +45,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 579, y: 492}
+  m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 122
+  controlID: 89
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -222,10 +222,10 @@ MonoBehaviour:
     y: 0
     width: 1430
     height: 947
-  m_MinSize: {x: 303, y: 492}
+  m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 80
+  controlID: 90
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,10 +247,10 @@ MonoBehaviour:
     y: 0
     width: 1430
     height: 671
-  m_MinSize: {x: 303, y: 221}
+  m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 81
+  controlID: 91
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -270,14 +270,14 @@ MonoBehaviour:
     y: 0
     width: 1110
     height: 671
-  m_MinSize: {x: 102, y: 121}
+  m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 12}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
   - {fileID: 12}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -336,7 +336,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -405,13 +405,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Simon\Desktop\dissertation\cyber_security_game\Cyber
     Security Game
@@ -419,9 +419,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 9}
-    m_SelectedIDs: 204b0000
-    m_LastClickedID: 19232
-    m_ExpandedIDs: 00000000124b000000ca9a3b
+    m_SelectedIDs: 184b0000
+    m_LastClickedID: 19224
+    m_ExpandedIDs: 000000000c4b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -449,7 +449,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000124b0000
+    m_ExpandedIDs: 000000000c4b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300009c43000000000000b2450000b04500007646000098450000244a00001e4a0000064c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -572,7 +572,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 46e1fffff4e1ffff0ee2ffff20e4ffff24e4ffff28e4ffffdaecffff98edffffb2edffffc4efffffc8efffffccefffffd0f1ffffa0f7ffff56f8ffff70f8ffff82faffff86faffff8afaffff58fbffffd8630000
+      m_ExpandedIDs: 7c8ffefff48ffeff8690feff1495feff0c9dfeff249dfeff389ffeff4e9ffeff649ffeff2ca8feff44a8feff54aafeff5caafeff64aafeffaeaafeffcab1feff32bafeff4abafeff64bcfeff68bcfeff6cbcfeff50c4feff68c4feff86c6feff8ec6feff96c6feffbcc6feffe8c7feffd2d0feffaed6feffc6d6feff3ad8feff3ed8feff48d8feff14dafeff02e3feffe8e8feff00e9feff74eafeff78eafeff82eafeff3aecfeff3af5feff52f5feff6cf7feff70f7feff74f7feff1cf8feff34f8feff4efafeff52fafeff56fafeff9a02ffff4003ffff5803ffffe403ffffe803ffffec03ffff3604ffff4e04ffff6806ffff6c06ffff7006ffffc20effffda0efffff410fffff810fffffc10fffff012ffffc818ffff7619ffff8e19ffffa81bffffac1bffffb01bffff2224ffff3a24ffff5426ffff5826ffff5c26ffff9c2effffb42effffce30ffffd230ffffd630ffff8a38ffff3c39ffff5439ffff6e3bffff723bffff763bffff6444ffff7c44ffff9646ffff9a46ffff9e46ffff7056ffff1a57ffff3257ffff4c59ffff5059ffff5459ffff6c67ffff1468ffff2c68ffff466affff4a6affff4e6affff9472ffff4673ffff5e73ffff7875ffff7c75ffff8075ffff6e7dffff5085ffff0286ffff1a86ffff3488ffff3888ffff3c88ffffb691ffffce91ffff5a92ffff5e92ffff6292ffffa692ffffbe92ffffd894ffffdc94ffffe094fffffe96ffffd69cffff869dffff9e9dffffb89fffffbc9fffffc09fffff30a8ffffdea8fffff6a8ffff10abffff14abffff18abffffccb3ffffe4b3fffffeb5ffff02b6ffff06b6ffff8ebeffff42bfffff5abfffff74c1ffff78c1ffff7cc1ffffccc9ffff82caffff9acaffffb4ccffffb8ccffffbcccffff58d4ffff00d5ffff18d5ffff32d7ffff36d7ffff3ad7ffff18dfffffc6dfffffdedffffff8e1fffffce1ffff00e2ffffc6e2ffffdee2fffff8e4fffffce4ffff00e5ffff8aeeffff32efffff4aefffffd6efffffdaefffffdeefffff18f0ffff30f0ffff4af2ffff4ef2ffff52f2ffff22faffff62fbffff96750000b884000006b20000b2ce000024f000009ef00000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

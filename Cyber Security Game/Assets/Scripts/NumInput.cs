@@ -29,7 +29,7 @@ public class NumInput : MonoBehaviour
     //    canvas.SetActive(true);
     //}
 
-    void Start()
+    void Awake()
     {
         //Hide();
         AttackSlider.onValueChanged.AddListener(delegate { SliderValue(); });
@@ -79,10 +79,10 @@ public class NumInput : MonoBehaviour
         }
         else if (function == "attack")
         {
-            // Vector3 result = entity.Attack(fromEntity, ((int)AttackSlider.value + 1));
+            Vector3 result = entity.Attack(fromEntity, ((int)AttackSlider.value + 1));
             AttackSlider.value = 0;
-            // reportScreen.transform.GetChild(1).GetComponent<Text>().text = ("Attack Report \n\n\n Attack launched from " + fromEntity.name + " to " + entity.name + "\n\n You rolled a " + result.x + "\n\n You suffered " + result.y + " damage \n\n" + entity.name + " suffered " + result.z + " damage");
-            reportScreen.GetComponent<OpenScreen>().show();
+            GameObject report = Instantiate(reportScreen);
+            report.transform.GetChild(1).GetComponent<Text>().text = ("Attack Report \n\n\n Attack launched from " + fromEntity.name + " to " + entity.name + "\n\n You rolled a " + result.x + "\n\n You suffered " + result.y + " damage \n\n" + entity.name + " suffered " + result.z + " damage");
         }
         //Hide();
         DestroyScreen();

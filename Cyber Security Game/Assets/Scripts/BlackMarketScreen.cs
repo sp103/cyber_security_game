@@ -9,9 +9,8 @@ public class BlackMarketScreen : NetworkBehaviour
 
     public void OpenScreen()
     {
-        foreach (GameObject manager in GameObject.FindGameObjectsWithTag("GameManager"))
-            if (manager.GetComponent<NetworkIdentity>().hasAuthority)
-                if ((manager.GetComponent<GameManager>().PlayerTurn && GameObject.Find("PlayerArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority) || (!manager.GetComponent<GameManager>().PlayerTurn && GameObject.Find("EnemyArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority))
-                    screen.GetComponent<OpenScreen>().show();
+        GameManager manager = FindObjectOfType<GameManager>();
+        if ((manager.PlayerTurn && GameObject.Find("PlayerArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority) || (!manager.PlayerTurn && GameObject.Find("EnemyArea(Clone)").GetComponent<NetworkIdentity>().hasAuthority))
+            screen.GetComponent<OpenScreen>().show();
     }
 }
