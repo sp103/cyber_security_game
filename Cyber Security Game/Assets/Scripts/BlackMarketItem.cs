@@ -9,12 +9,16 @@ public class BlackMarketItem : NetworkBehaviour
     // Game manager GameObject
     GameManager manager;
     // Current highest bid
-    int BidAmount;
+    [SyncVar]
+    public int BidAmount;
     // The turn the highest bid was placed
+    [SyncVar]
     int BidTurn;
     // Is the item actively being bid on
+    [SyncVar]
     public bool active;
     // Who bid last
+    [SyncVar]
     string LastBid;
     // id to store item effects
     public int id;
@@ -24,14 +28,20 @@ public class BlackMarketItem : NetworkBehaviour
 
     private void Start()
     {
-        manager = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
+        manager = FindObjectOfType<GameManager>();
         text = transform.GetChild(3).GetComponent<Announcement>();
         BidText = transform.GetChild(4).GetComponent<Text>();
         BidText.text = ("Min bid: " + MinBid);
         BidAmount = MinBid - 1;
     }
 
+    [Command]
     public void TurnUpdate()
+    {
+        RpcTurnUpdate();
+    }
+
+    void RpcTurnUpdate()
     {
         int turn = manager.Turns;
         if (active & (turn != BidTurn))
@@ -58,35 +68,28 @@ public class BlackMarketItem : NetworkBehaviour
         {
             if (manager.PlayerTurn)
             {
-                if (GameObject.Find("GCHQ").GetComponent<Entity>().Resources >= NewBid)
+                if (GameObject.Find("GCHQ(Clone)").GetComponent<Entity>().Resources >= NewBid)
                 {
-                    active = true;
-                    LastBid = "Player";
                     BidAmount = NewBid;
-                    BidTurn = manager.Turns;
+                    CmdBid(NewBid);
                     transform.GetChild(0).GetComponent<InputField>().text = "";
                     text.SetText("You are the highest bidder");
-                    BidText.text = ("Current bid " + BidAmount);
                 }
                 else
                     text.SetText("Not enough resources to bid");
             }
             else
             {
-                if (GameObject.Find("SCS").GetComponent<Entity>().Resources >= NewBid)
+                if (GameObject.Find("SCS(Clone)").GetComponent<Entity>().Resources >= NewBid)
                 {
-                    if (GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 4)
+                    if (GameObject.Find("EventCard(Clone)") && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 4)
                         text.SetText("Russia has been embargoed this month");
                     else
                     {
-                        active = true;
-                        LastBid = "Enemy";
                         BidAmount = NewBid;
-                        BidTurn = manager.Turns;
+                        CmdBid(NewBid);
                         transform.GetChild(0).GetComponent<InputField>().text = "";
                         text.SetText("You are the highest bidder");
-                        BidText.text = "No Current Bids";
-                        BidText.text = ("Current bid " + BidAmount);
                     }
                 }
                 else
@@ -95,5 +98,30 @@ public class BlackMarketItem : NetworkBehaviour
         }
         else
             text.SetText("You need to bid more than " + BidAmount);
+    }
+
+    void CmdBid(int bid)
+    {
+        SvrBid(bid);
+    }
+
+    [Server]
+    void SvrBid(int bid)
+    {
+        Debug.Log("CALLED");
+        active = true;
+        BidAmount = bid;
+        BidTurn = manager.Turns;
+        if (manager.PlayerTurn)
+            LastBid = "Player";
+        else
+            LastBid = "Enemy";
+        RpcBidText();
+    }
+
+    [ClientRpc]
+    void RpcBidText()
+    {
+        BidText.text = ("Current bid " + BidAmount);
     }
 }

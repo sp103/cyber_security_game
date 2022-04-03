@@ -22,23 +22,30 @@ public class Player : NetworkBehaviour
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
-        cmdStarter();
+        CmdFindManager();
     }
 
     [Command]
-    void cmdStarter()
+    void CmdFindManager()
     {
-        transform.parent = GameObject.Find("MainScreen").transform;
-        transform.localPosition = new Vector3(34.5f, -30, 0);
+        manager = FindObjectOfType<GameManager>();
+        manager.PlayerLoaded();
+    }
+
+    [Command]
+    public void CmdStarter()
+    {
+        //transform.parent = GameObject.Find("MainScreen").transform;
+        //transform.localPosition = new Vector3(34.5f, -30, 0);
         foreach (GameObject obj in entities)
         {
             GameObject entity = Instantiate(obj);
+            entity.transform.SetParent(transform);
             NetworkServer.Spawn(entity, connectionToClient);
-            entity.transform.parent = transform;
             RpcEntityPosition(entity);
         }
-        manager = FindObjectOfType<GameManager>();
-        manager.PlayerLoaded(gameObject);
+        transform.SetParent(GameObject.Find("MainScreen").transform);
+        transform.localPosition = new Vector3(34.5f, -30, 0);
         RpcSetPosition();
     }
 
@@ -52,7 +59,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     void RpcSetPosition()
     {
-        transform.parent = GameObject.Find("MainScreen").transform;
+        transform.SetParent(GameObject.Find("MainScreen").transform);
         transform.localPosition = new Vector3(34.5f, -30, 0);
     }
 

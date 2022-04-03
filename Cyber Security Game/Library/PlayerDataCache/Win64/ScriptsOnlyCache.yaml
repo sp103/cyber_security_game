@@ -32,7 +32,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
@@ -52,9 +51,6 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
-    UnityEditor.UI.dll:
-    - UnityEditor.UI.CanvasScalerEditor
-    - UnityEditor.UI.ImageEditor
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.EventTrigger
@@ -94,31 +90,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1496}
     - Class: 114
-      Script: {instanceID: 1500}
+      Script: {instanceID: 1498}
     - Class: 114
-      Script: {instanceID: 1718}
+      Script: {instanceID: 1502}
     - Class: 114
-      Script: {instanceID: 2400}
+      Script: {instanceID: 1720}
     - Class: 114
-      Script: {instanceID: 2600}
+      Script: {instanceID: 2402}
     - Class: 114
-      Script: {instanceID: 2720}
+      Script: {instanceID: 2602}
     - Class: 114
-      Script: {instanceID: 2770}
+      Script: {instanceID: 2722}
     - Class: 114
-      Script: {instanceID: 2794}
+      Script: {instanceID: 2772}
     - Class: 114
-      Script: {instanceID: 2864}
+      Script: {instanceID: 2796}
     - Class: 114
-      Script: {instanceID: 3412}
+      Script: {instanceID: 2866}
     - Class: 114
-      Script: {instanceID: 3604}
+      Script: {instanceID: 3414}
     - Class: 114
-      Script: {instanceID: 3776}
+      Script: {instanceID: 3606}
     - Class: 114
-      Script: {instanceID: 3838}
+      Script: {instanceID: 3778}
     - Class: 114
-      Script: {instanceID: 4718}
+      Script: {instanceID: 3840}
     - Class: 114
       Script: {instanceID: 4974}
     - Class: 114
@@ -177,9 +173,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1494}
     - Class: 114
-      Script: {instanceID: 1496}
+      Script: {instanceID: 1498}
     - Class: 114
-      Script: {instanceID: 2400}
+      Script: {instanceID: 2402}
     - Class: 114
       Script: {instanceID: 4974}
     - Class: 114
@@ -222,39 +218,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1498}
     - Class: 114
-      Script: {instanceID: 1718}
+      Script: {instanceID: 1500}
     - Class: 114
-      Script: {instanceID: 2010}
+      Script: {instanceID: 1720}
     - Class: 114
-      Script: {instanceID: 2144}
+      Script: {instanceID: 2012}
     - Class: 114
-      Script: {instanceID: 2400}
+      Script: {instanceID: 2146}
     - Class: 114
-      Script: {instanceID: 2600}
+      Script: {instanceID: 2402}
     - Class: 114
-      Script: {instanceID: 2770}
+      Script: {instanceID: 2602}
     - Class: 114
-      Script: {instanceID: 3246}
+      Script: {instanceID: 2772}
     - Class: 114
-      Script: {instanceID: 3552}
+      Script: {instanceID: 3248}
     - Class: 114
-      Script: {instanceID: 3622}
+      Script: {instanceID: 3554}
     - Class: 114
-      Script: {instanceID: 3776}
+      Script: {instanceID: 3624}
     - Class: 114
-      Script: {instanceID: 3838}
+      Script: {instanceID: 3778}
     - Class: 114
-      Script: {instanceID: 3860}
+      Script: {instanceID: 3840}
     - Class: 114
-      Script: {instanceID: 3946}
+      Script: {instanceID: 3862}
     - Class: 114
-      Script: {instanceID: 4246}
+      Script: {instanceID: 3948}
     - Class: 114
-      Script: {instanceID: 4446}
+      Script: {instanceID: 4248}
     - Class: 114
-      Script: {instanceID: 4494}
+      Script: {instanceID: 4448}
     - Class: 114
-      Script: {instanceID: 4718}
+      Script: {instanceID: 4496}
     - Class: 114
       Script: {instanceID: 4974}
     - Class: 114
@@ -272,7 +268,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6490}
     - Class: 114
-      Script: {instanceID: 58922}
+      Script: {instanceID: 6712}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -296,6 +292,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Image
+  - hash:
+      serializedVersion: 2
+      Hash: 699619b86d9359741a4f58540298c80b
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Text
   - hash:
       serializedVersion: 2
       Hash: ae83e830e7a90c0aff918c4c2e520825
@@ -760,7 +762,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: d04e221b0ac4f9b1082403317bb04bb7
+      Hash: e6e6c8008752da7d678b9169aeacbf3c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -962,12 +964,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.Chat
     className: Player
-  - hash:
-      serializedVersion: 2
-      Hash: 699619b86d9359741a4f58540298c80b
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Text
   - hash:
       serializedVersion: 2
       Hash: ad425eb6c32a6f6977115fef236ef55f
@@ -1192,7 +1188,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 4ec97795550d1fbbcfc48ae2e1b4f647
+      Hash: 6cbb22ad6bf2b4779e9cb440ef2474f6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BlackMarketItem
@@ -1427,6 +1423,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ReportScreen
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.MultipleAdditiveScenes
     className: PhysicsSimulator
@@ -1460,12 +1462,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
     className: NetworkRoomPlayerExt
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ReportScreen
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity

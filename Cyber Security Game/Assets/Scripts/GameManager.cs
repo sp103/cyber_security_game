@@ -36,18 +36,14 @@ public class GameManager : NetworkBehaviour
     Text PlayerVictoryPoints;
     Text EnemyVictoryPoints;
 
-    public GameObject BlackMarket;
+    public GameObject blackMarket;
 
     // funtion called on server once player object has loaded
     [Server]
-    public void PlayerLoaded(GameObject calledFrom)
+    public void PlayerLoaded()
     {
-        if (NetworkServer.connections.Count == 2)
+        if (GameObject.Find("PlayerArea(Clone)") && GameObject.Find("EnemyArea(Clone)"))
         {
-            if (calledFrom.name == "PlayerArea(Clone)")
-                player = calledFrom.GetComponent<Player>();
-            if (calledFrom.name == "EnemyArea(Clone)")
-                enemy = calledFrom.GetComponent<Enemy>();
             // load data on server instance
             LoadData();
             // load data on all client instances
@@ -55,8 +51,6 @@ public class GameManager : NetworkBehaviour
             // if an event card has not already been drawen draw one
             //if (!GameObject.Find("EventCard(Clone)"))
             //    DrawEventCard();
-            // display turn info on clients
-            RpcDisplayInfo();
         }
     }
 
@@ -65,22 +59,29 @@ public class GameManager : NetworkBehaviour
     public void RpcLoadDataOnClients()
     {
         LoadData();
+        DisplayInfo();
     }
 
     public void LoadData()
     {
+        // read data from xml file
         reader.LoadData();
         AttackVectors = reader.LoadVectors();
         ResourceRoutes = reader.LoadRoutes();
 
-        if (GameObject.Find("PlayerArea(Clone)"))
-            player = GameObject.Find("PlayerArea(Clone)").GetComponent<Player>();
-        if (GameObject.Find("EnemyArea(Clone)"))
-            enemy = GameObject.Find("EnemyArea(Clone)").GetComponent<Enemy>();
+        blackMarket = FindObjectOfType<BlackMarket>(true).gameObject;
 
+        // find player objects
+        player = FindObjectOfType<Player>();
+        if (player.hasAuthority)
+            player.CmdStarter();
+        enemy = FindObjectOfType<Enemy>();
+        if (enemy.hasAuthority)
+            enemy.CmdStarter();
+
+        // set text fields
         TurnData = GameObject.Find("TurnData").GetComponent<Text>();
         PlayerData = GameObject.Find("PlayerInfo").GetComponent<Text>();
-
         PlayerVictoryPoints = GameObject.Find("PlayerVictoryPoints").GetComponent<Text>();
         EnemyVictoryPoints = GameObject.Find("EnemyVictoryPoints").GetComponent<Text>();
     }
@@ -144,9 +145,11 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            //if (!GameObject.Find("EventCard(Clone)") || (GameObject.Find("EventCard(Clone)") && !(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6)))
-            if (enemy.GetComponent<NetworkIdentity>().hasAuthority)
-                GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
+            if (!GameObject.Find("EventCard(Clone)") || (GameObject.Find("EventCard(Clone)") && !(GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 6)))
+            {
+                if (enemy.GetComponent<NetworkIdentity>().hasAuthority)
+                    GameObject.Find("Russian Government(Clone)").GetComponent<Entity>().SetResources(3);
+            }
         }
         DisplayInfo();
     }
@@ -167,7 +170,7 @@ public class GameManager : NetworkBehaviour
             player.MonthlyUpdate(month);
             enemy.MonthlyUpdate(month);
         }
-        // BlackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
+        blackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
         // end game after 24 turns
         if (Turns == 23) EndGame();
         PlayerTurn = !PlayerTurn;
