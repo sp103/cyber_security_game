@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 1021389366428398736}
   - component: {fileID: 1021389366428398743}
   - component: {fileID: 1021389366428398742}
+  - component: {fileID: 4304116125476941922}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -200,9 +201,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 188220545974793257}
-        m_TargetAssemblyTypeName: BlackMarketItem, Assembly-CSharp
-        m_MethodName: Bid
+      - m_Target: {fileID: 4304116125476941922}
+        m_TargetAssemblyTypeName: Bid, Assembly-CSharp
+        m_MethodName: PlaceBid
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -212,6 +213,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4304116125476941922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021389366428398740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d131f63a4fd60a4458340522ffca353c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1021389366553805793
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +317,6 @@ GameObject:
   - component: {fileID: 1021389367544085958}
   - component: {fileID: 188220545974793257}
   - component: {fileID: 1220303321534838086}
-  - component: {fileID: -350509435285009718}
   m_Layer: 0
   m_Name: BlackMarketItem
   m_TagString: Untagged
@@ -388,6 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  BidAmount: 0
   active: 0
   id: 0
   MinBid: 0
@@ -408,40 +421,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: b6a2fe47d9f16e74eb7243971a6f9a17
   hasSpawned: 0
---- !u!114 &-350509435285009718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1021389367544085956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &1021389367558634414
 GameObject:
   m_ObjectHideFlags: 0

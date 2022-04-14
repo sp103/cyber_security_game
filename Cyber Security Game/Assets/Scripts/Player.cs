@@ -6,6 +6,7 @@ using Mirror;
 
 public class Player : NetworkBehaviour
 {
+    [SyncVar]
     public int VictoryPoints = 0;
     int GCHQVitality = 0;
     int GCHQQuarters = 0;
@@ -18,10 +19,13 @@ public class Player : NetworkBehaviour
     GameManager manager;
     public GameObject gameManager;
     public GameObject[] entities = new GameObject[5];
+    public GameObject reportScreen;
 
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
+        GameObject report = Instantiate(reportScreen);
+        report.transform.GetChild(1).GetComponent<Text>().text = "You are playing as the UK\n\nYour entities are at the bottom of the screen, click on these entities to find out how to get victory points.\nThe player with the most victory points at the end of 12 turns or after an attack leaves an entity with negative vitality wins.\n\nClick on the ? button for help";
         CmdFindManager();
     }
 
@@ -35,24 +39,26 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdStarter()
     {
-        //transform.parent = GameObject.Find("MainScreen").transform;
-        //transform.localPosition = new Vector3(34.5f, -30, 0);
-        foreach (GameObject obj in entities)
-        {
-            GameObject entity = Instantiate(obj);
-            entity.transform.SetParent(transform);
-            NetworkServer.Spawn(entity, connectionToClient);
-            RpcEntityPosition(entity);
-        }
         transform.SetParent(GameObject.Find("MainScreen").transform);
         transform.localPosition = new Vector3(34.5f, -30, 0);
         RpcSetPosition();
+        for (int i = 0; i < entities.Length; i++)
+        {
+            GameObject entity = Instantiate(entities[i]);
+            NetworkServer.Spawn(entity, connectionToClient);
+            entity.transform.SetParent(transform);
+            entity.transform.position = GameObject.Find("PlayerSpawnpoints").transform.GetChild(i).transform.position;
+            RpcEntityPosition(entity, i);
+        }
     }
 
     [ClientRpc]
-    void RpcEntityPosition(GameObject entity)
+    void RpcEntityPosition(GameObject entity, int i)
     {
         entity.transform.SetParent(transform);
+        entity.transform.position = GameObject.Find("PlayerSpawnpoints").transform.GetChild(i).transform.position;
+        entity.transform.position = new Vector3(entity.transform.position.x, entity.transform.position.y, 1);
+        
     }
 
 
@@ -68,6 +74,16 @@ public class Player : NetworkBehaviour
     {
         if (manager.PlayerTurn)
             manager.SvrEndTurn();
+    }
+
+    [Command]
+    public void CmdPlaceBid(int bidAmount, int id)
+    {
+        foreach (BlackMarketItem item in FindObjectsOfType<BlackMarketItem>(true))
+        {
+            if (item.id == id)
+                item.Bid(bidAmount);
+        }
     }
 
     public void TurnUpdate()
@@ -116,8 +132,16 @@ public class Player : NetworkBehaviour
             }
             GCHQQuarters++;
         }
-        //string info = ("UK Government Q" + quarter + " Report \n\n");
-        //ReportScreen.transform.GetChild(1).GetComponent<Text>().text = info;
-        //ReportScreen.GetComponent<OpenScreen>().show();
+    }
+
+    public void IncrementVictoryPoints(int points)
+    {
+        CmdIncrementVictoryPoints(points);
+    }
+
+    [Command]
+    void CmdIncrementVictoryPoints(int points)
+    {
+        VictoryPoints += points;
     }
 }

@@ -51,9 +51,14 @@ MonoBehaviour:
   Turns: 0
   PlayerTurn: 1
   EventCard: {fileID: 1477161622339551396, guid: 194f23b54c195d942b17ffa8287032b0, type: 3}
+  month: January
+  quarter: 0
   TurnData: {fileID: 0}
   PlayerData: {fileID: 0}
-  BlackMarket: {fileID: 0}
+  blackMarket: {fileID: 0}
+  reportScreen: {fileID: 4095118611446568140, guid: c17ce6c852ddf104bb24d2b4f502fa5c, type: 3}
+  ukFlag: {fileID: 21300000, guid: e7e9ac5e5c9b5e84c83364818ed65955, type: 3}
+  RussianFlag: {fileID: 21300000, guid: 155d4f890ee63b749a36c9fde3598c5c, type: 3}
 --- !u!114 &1302107960817262605
 MonoBehaviour:
   m_ObjectHideFlags: 0

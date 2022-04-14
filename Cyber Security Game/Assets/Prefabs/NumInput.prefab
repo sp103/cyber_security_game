@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1542569917}
   - component: {fileID: 1542569919}
-  - component: {fileID: 1542569918}
+  - component: {fileID: 3423493128868602847}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -436,7 +436,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542569916}
   m_CullTransparentMesh: 1
---- !u!114 &1542569918
+--- !u!114 &3423493128868602847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,7 +458,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -786,13 +786,20 @@ MonoBehaviour:
   fromEntity: {fileID: 0}
   num: 0
   AttackSlider: {fileID: 552244942}
-  images:
+  attackImages:
   - {fileID: 21300000, guid: f3294bdace1ed204a836775e38090238, type: 3}
   - {fileID: 21300000, guid: 043df09e7a490a044975ac4039c131d9, type: 3}
   - {fileID: 21300000, guid: b8242fe2f8cabb24396c176dcc92b3ff, type: 3}
   - {fileID: 21300000, guid: 264322a131a241345818efb743674bb8, type: 3}
   - {fileID: 21300000, guid: 4891e1427a4d2094bb304f0c774754e7, type: 3}
   - {fileID: 21300000, guid: db6681390a5c0ad47b8b995356fb30ba, type: 3}
+  vitalityImages:
+  - {fileID: 7417498029127908629, guid: 96d20bffdbb47b243ab162ab0f78dab8, type: 3}
+  - {fileID: 4440353514750019237, guid: 96d20bffdbb47b243ab162ab0f78dab8, type: 3}
+  - {fileID: -8045800707232473503, guid: 96d20bffdbb47b243ab162ab0f78dab8, type: 3}
+  - {fileID: 8701309638641752994, guid: 96d20bffdbb47b243ab162ab0f78dab8, type: 3}
+  - {fileID: 4187577688158176072, guid: 96d20bffdbb47b243ab162ab0f78dab8, type: 3}
+  - {fileID: -2669798006401443879, guid: 96d20bffdbb47b243ab162ab0f78dab8, type: 3}
   reportScreen: {fileID: 4095118611446568140, guid: c17ce6c852ddf104bb24d2b4f502fa5c, type: 3}
 --- !u!1 &1191364615496605728
 GameObject:

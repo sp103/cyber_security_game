@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
@@ -12,7 +13,7 @@ public class GameManager : NetworkBehaviour
     public Enemy enemy;
     [SyncVar]
     public int Turns = 0;
-    [SyncVar (hook = nameof(PlayerTurnUpdate))]
+    [SyncVar(hook = nameof(PlayerTurnUpdate))]
     public bool PlayerTurn = true;
 
     // Arrays for storing attack vectors and resource routes
@@ -25,7 +26,7 @@ public class GameManager : NetworkBehaviour
     // event card prefab
     public GameObject EventCard;
     string[] months = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-    [SyncVar (hook = nameof(MonthChange))]
+    [SyncVar(hook = nameof(MonthChange))]
     public string month = "January";
     [SyncVar]
     public int quarter;
@@ -37,13 +38,19 @@ public class GameManager : NetworkBehaviour
     Text EnemyVictoryPoints;
 
     public GameObject blackMarket;
+    public GameObject reportScreen;
+
+    public Sprite ukFlag;
+    public Sprite RussianFlag;
 
     // funtion called on server once player object has loaded
     [Server]
     public void PlayerLoaded()
     {
-        if (GameObject.Find("PlayerArea(Clone)") && GameObject.Find("EnemyArea(Clone)"))
+        if (FindObjectOfType<Player>() && FindObjectOfType<Enemy>())
         {
+            blackMarket = FindObjectOfType<BlackMarket>(true).gameObject;
+            blackMarket.GetComponent<BlackMarket>().Load();
             // load data on server instance
             LoadData();
             // load data on all client instances
@@ -58,18 +65,24 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void RpcLoadDataOnClients()
     {
+        blackMarket = FindObjectOfType<BlackMarket>(true).gameObject;
         LoadData();
         DisplayInfo();
     }
 
     public void LoadData()
     {
+        //List<GameObject> items = new List<GameObject>();
+        //foreach (BlackMarketItem item in FindObjectsOfType<BlackMarketItem>(true))
+        //    blackMarket.GetComponent<BlackMarket>().BlackMarketItems.Add(item.gameObject);
+        //    items.Add(item.gameObject);
+        //items.Reverse();
+        //blackMarket.GetComponent<BlackMarket>().BlackMarketItems = items;
+        blackMarket.GetComponent<BlackMarket>().LoadItems();
         // read data from xml file
         reader.LoadData();
         AttackVectors = reader.LoadVectors();
         ResourceRoutes = reader.LoadRoutes();
-
-        blackMarket = FindObjectOfType<BlackMarket>(true).gameObject;
 
         // find player objects
         player = FindObjectOfType<Player>();
@@ -117,13 +130,35 @@ public class GameManager : NetworkBehaviour
     }
 
     // Function used for Enabling specific attack vectors
+    [Command(requiresAuthority = false)]
+    public void CmdEnableAttackVector(string To, string From)
+    {
+        EnableAttackVector(To, From);
+        RpcEnableAttackVector(To, From);
+    }
+
+    [ClientRpc]
+    public void RpcEnableAttackVector(string To, string From)
+    {
+        EnableAttackVector(To, From);
+        GameObject.Find(From + To).GetComponent<Image>().enabled = true;
+        GameObject.Find(From + To).transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     public void EnableAttackVector(string To, string From)
     {
+        Debug.Log(CheckAttackVectors(To,From));
         foreach (AttackVector vector in AttackVectors)
         {
             if (vector.To == To && vector.From == From)
+            {
+                AttackVectors.Remove(vector);
+                Debug.Log("FOUND");
                 vector.Enabled = true;
+                AttackVectors.Add(vector);
+            }
         }
+        Debug.Log(CheckAttackVectors(To, From));
     }
 
     // Function used for finding specific resource routes
@@ -172,8 +207,12 @@ public class GameManager : NetworkBehaviour
         }
         blackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
         // end game after 24 turns
-        if (Turns == 23) EndGame();
-        PlayerTurn = !PlayerTurn;
+        if (Turns == 23)
+        {
+            SvrEndGame();
+            return;
+        }
+            PlayerTurn = !PlayerTurn;
         // update month and quarter based off turns
         month = months[(Turns + 1) / 2];
         quarter = (Turns + 1) / 6;
@@ -183,24 +222,25 @@ public class GameManager : NetworkBehaviour
         RpcDisplayInfo();
     }
 
-    public void EndTurn()
-    {
-        player.TurnUpdate();
-        enemy.TurnUpdate();
-        if (Turns % 2 == 1)
-        {
-            player.MonthlyUpdate(month);
-            enemy.MonthlyUpdate(month);
-        }
-        // BlackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
-        // end game after 24 turns
-        if (Turns == 23) EndGame();
+    //public void EndTurn()
+    //{
+    //    player.TurnUpdate();
+    //    enemy.TurnUpdate();
+    //    if (Turns % 2 == 1)
+    //    {
+    //        player.MonthlyUpdate(month);
+    //        enemy.MonthlyUpdate(month);
+    //    }
+    //    // BlackMarket.GetComponent<BlackMarket>().MonthlyUpdate();
+    //    // end game after 24 turns
+    //    if (Turns == 23)
+    //        EndGame();
 
-        Turns++;
-        // update month and quarter based off turns
-        month = months[Turns / 2];
-        quarter = Turns / 6;
-    }
+    //    Turns++;
+    //    // update month and quarter based off turns
+    //    month = months[Turns / 2];
+    //    quarter = Turns / 6;
+    //}
 
     // Display info about this turn
     [ClientRpc]
@@ -228,8 +268,41 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public void EndGame()
+    [Server]
+    public void SvrEndGame()
     {
-        Debug.Log("Game Ended");
+        RpcEndInfo();
+        StartCoroutine(DelayEnd());
+    }
+
+    [ClientRpc]
+    void RpcEndInfo()
+    {
+        GameObject report = Instantiate(reportScreen);
+        report.transform.GetChild(2).GetComponent<Image>().preserveAspect = true;
+        if (player.VictoryPoints > enemy.VictoryPoints)
+        {
+            report.transform.GetChild(1).GetComponent<Text>().text = "UK has won";
+            report.transform.GetChild(2).gameObject.SetActive(true);
+            report.transform.GetChild(2).GetComponent<Image>().sprite = ukFlag;
+        }
+        else if (enemy.VictoryPoints > player.VictoryPoints)
+        {
+            report.transform.GetChild(1).GetComponent<Text>().text = "Russia has won";
+            report.transform.GetChild(2).gameObject.SetActive(true);
+            report.transform.GetChild(2).GetComponent<Image>().sprite = RussianFlag;
+        }
+        else
+            report.transform.GetChild(1).GetComponent<Text>().text = "Stalemate nobody won";
+
+    }
+
+    IEnumerator DelayEnd()
+    {
+        yield return new WaitForSeconds(10.0f);
+
+        NetworkRoomManager.singleton.StopClient();
+        NetworkRoomManager.singleton.StopHost();
+        NetworkServer.DisconnectAll();
     }
 }

@@ -22,8 +22,10 @@ public class Entity : NetworkBehaviour, IDropHandler {
     readonly int[] five = new int[] { -2, -1, 2, 3, 3, 4 };
     readonly int[] six = new int[] { -2, -1, 0, 3, 5, 6 };
     // damage multiplier for black market cards
+    [SyncVar]
     public double DamageMultiplier = 1;
     // keeps track of how many turns the multiplier effect lasts
+    [SyncVar]
     public int MultiplierTurns = 0;
     // used to give revitalise discount from black market card
     public bool discount = false;
@@ -61,6 +63,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
             {
                 if (eventData.pointerDrag.tag == "Entity" && DamageMultiplier != 0)
                 {
+                Debug.Log(GameManager.CheckAttackVectors(name, eventData.pointerDrag.name));
                     if (GameManager.CheckAttackVectors(name, eventData.pointerDrag.name))
                     {
                         Instantiate(numInput).GetComponent<NumInput>().SetEntity(this, "attack", eventData.pointerDrag.GetComponent<Entity>());
@@ -111,10 +114,12 @@ public class Entity : NetworkBehaviour, IDropHandler {
                 attackerDamage = attack * - 1;
                 attack = 0;
             }
-            if (from.name == "Online Trolls" && (amount == 3 || amount == 4))
-                GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints--;
-            if (from.name == "Online Trolls" && (amount == 5 || amount == 6))
-                GameObject.Find("EnemyArea").GetComponent<Enemy>().VictoryPoints -= 2;
+            if (from.name == "Online Trolls(Clone)" && (amount == 3 || amount == 4))
+                GameObject.Find("EnemyArea(Clone)").GetComponent<Enemy>().IncrementVictoryPoints(-1);
+            if (from.name == "Online Trolls(Clone)" && (amount == 5 || amount == 6))
+                GameObject.Find("EnemyArea(Clone)").GetComponent<Enemy>().IncrementVictoryPoints(-2);
+            if (from.name == "Online Trolls(Clone)" && amount > 3)
+                GameObject.Find("EnemyArea(Clone)").GetComponent<Enemy>().IncrementVictoryPoints(2);
             // check if uk plc defence card is active and give uk plc vitality if it is
             if (name == "UK PLC(Clone)" && attack > 0)
                 if (transform.parent.GetComponent<Player>().PLCDefence)
@@ -136,8 +141,8 @@ public class Entity : NetworkBehaviour, IDropHandler {
             from.CmdSetResources(-amount);
             CmdSetResources(amount);
         }
-        if (from.name == "Electorate")
-            GameObject.Find("PlayerArea").GetComponent<Player>().VictoryPoints--;
+        if (from.name == "Electorate(Clone)")
+            GameObject.Find("PlayerArea(Clone)").GetComponent<Player>().IncrementVictoryPoints(-1);
         //from.RpcUpdateInterface();
         //RpcUpdateInterface();
     }
@@ -145,7 +150,10 @@ public class Entity : NetworkBehaviour, IDropHandler {
     //Function that takes the entered amount of resources and turns it into vitality
     public void Revitalise(int cost)
     {
-        if (Resources >= cost)
+        int resource = Resources;
+        if (discount)
+            resource += 1;
+        if (resource >= cost)
         {
             switch (cost)
             {
@@ -179,7 +187,9 @@ public class Entity : NetworkBehaviour, IDropHandler {
                     CmdSetResources(-cost);
                     break;
             }
-            revitalised = true;
+            if (discount)
+                CmdSetResources(1);
+            //revitalised = true;
             //RpcUpdateInterface();
         }
     }
@@ -189,6 +199,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
         CmdSetResources(resources);
     }
 
+    // server function to change resource variable
     [Command (requiresAuthority = false)]
     void CmdSetResources(int resources)
     {
@@ -200,17 +211,50 @@ public class Entity : NetworkBehaviour, IDropHandler {
         CmdSetVitality(vitality);
     }
 
+    // server command to change vitality variable
     [Command (requiresAuthority = false)]
     void CmdSetVitality(double vitality)
     {
         Vitality = Vitality + vitality;
+        if (vitality < 0)
+        {
+            if (GameManager == null)
+                GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            GameManager.SvrEndGame();
+        }
     }
 
+    public void SetMultiplier(double multiplier)
+    {
+        CmdSetMultiplier(multiplier);
+    }
+
+    // server command to set the damage multiplier
+    [Command (requiresAuthority = false)]
+    void CmdSetMultiplier(double multiplier)
+    {
+        DamageMultiplier = multiplier;
+    }
+
+    public void SetMultiplierTurns(int turns)
+    {
+        CmdSetMultiplierTurns(turns);
+    }
+
+    // server command to set multiplier turns
+    [Command (requiresAuthority = false)]
+    void CmdSetMultiplierTurns(int turns)
+    {
+        MultiplierTurns = turns;
+    }
+
+    // update the gui value to match the variable
     void UpdateVitality(double oldVitality, double newVitality)
     {
         transform.GetChild(0).GetComponent<Text>().text = newVitality.ToString();
     }
 
+    // update the gui value to match the variable
     void UpdateResources(int oldResources, int newResources)
     {
         transform.GetChild(1).GetComponent<Text>().text = newResources.ToString();
@@ -232,7 +276,7 @@ public class Entity : NetworkBehaviour, IDropHandler {
             paralysedTurns--;
         else if (paralysed)
             paralysed = false;
-        revitalised = false;
+        //revitalised = false;
     }
 
     public void ShowInfo()

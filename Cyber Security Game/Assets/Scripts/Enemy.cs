@@ -6,6 +6,7 @@ using Mirror;
 
 public class Enemy : NetworkBehaviour
 {
+    [SyncVar]
     public int VictoryPoints = 0;
     int RosenergoatomVitality = 0;
     int RosenergoatomMonths = 0;
@@ -14,10 +15,13 @@ public class Enemy : NetworkBehaviour
     GameManager manager;
     public GameObject gameManager;
     public GameObject[] entities = new GameObject[5];
+    public GameObject reportScreen;
 
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
+        GameObject report = Instantiate(reportScreen);
+        report.transform.GetChild(1).GetComponent<Text>().text = "You are playing as Russia\n\nYour entities are at the top of the screen, click on these entities to find out how to get victory points.\nThe player with the most victory points at the end of 12 turns or after an attack leaves an entity with negative vitality wins.\n\nClick on the ? button for help";
         CmdFindManager();
     }
 
@@ -31,24 +35,25 @@ public class Enemy : NetworkBehaviour
     [Command]
     public void CmdStarter()
     {
-        //transform.parent = GameObject.Find("MainScreen").transform;
-        //transform.localPosition = new Vector3(34.5f, -50, 0);
-        foreach (GameObject obj in entities)
-        {
-            GameObject entity = Instantiate(obj);
-            NetworkServer.Spawn(entity, connectionToClient);
-            entity.transform.SetParent(transform);
-            RpcEntityPosition(entity);
-        }
         transform.SetParent(GameObject.Find("MainScreen").transform);
         transform.localPosition = new Vector3(34.5f, -50, 0);
         RpcSetPosition();
+        for (int i = 0; i < entities.Length; i++)
+        {
+            GameObject entity = Instantiate(entities[i]);
+            NetworkServer.Spawn(entity, connectionToClient);
+            entity.transform.SetParent(transform);
+            entity.transform.position = GameObject.Find("EnemySpawnpoints").transform.GetChild(i).transform.position;
+            RpcEntityPosition(entity, i);
+        }
     }
 
     [ClientRpc]
-    void RpcEntityPosition(GameObject entity)
+    void RpcEntityPosition(GameObject entity, int i)
     {
         entity.transform.SetParent(transform);
+        entity.transform.position = GameObject.Find("EnemySpawnpoints").transform.GetChild(i).transform.position;
+        entity.transform.position = new Vector3(entity.transform.position.x, entity.transform.position.y, 1);
     }
 
     [ClientRpc]
@@ -65,6 +70,16 @@ public class Enemy : NetworkBehaviour
             manager.SvrEndTurn();
     }
 
+    [Command]
+    public void CmdPlaceBid(int bidAmount, int id)
+    {
+        foreach (BlackMarketItem item in FindObjectsOfType<BlackMarketItem>(true))
+        {
+            if (item.id == id)
+                item.Bid(bidAmount);
+        }
+    }
+    
     public void TurnUpdate()
     {
         foreach (Transform child in transform)
@@ -114,5 +129,16 @@ public class Enemy : NetworkBehaviour
             }
             RosenergoatomMonths++;
         }
+    }
+
+    public void IncrementVictoryPoints(int points)
+    {
+        CmdIncrementVictoryPoints(points);
+    }
+
+    [Command]
+    void CmdIncrementVictoryPoints(int points)
+    {
+        VictoryPoints += points;
     }
 }

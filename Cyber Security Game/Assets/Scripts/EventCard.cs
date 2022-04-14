@@ -26,31 +26,37 @@ public class EventCard : NetworkBehaviour
             case 0:
                 // Nuclear Meltdown
                 Entity UkEnergy = GameObject.Find("UK Energy(Clone)").GetComponent <Entity>();
-                if (UkEnergy.hasAuthority)
+                if (UkEnergy.hasAuthority && UkEnergy.Vitality > 0)
                     UkEnergy.SetVitality(-1);
             break;
             case 1:
                 // Clumsy civil servant
                 Entity UkGov = GameObject.Find("UK Government(Clone)").GetComponent<Entity>();
-                if (UkGov.hasAuthority)
+                if (UkGov.hasAuthority && UkGov.Resources > 1)
                     UkGov.SetResources(-2);
+                else if (UkGov.hasAuthority && UkGov.Resources == 1)
+                    UkGov.SetResources(-1);
                 Entity Electorate = GameObject.Find("Electorate(Clone)").GetComponent<Entity>();
-                if (Electorate.hasAuthority)
+                if (Electorate.hasAuthority && Electorate.Vitality > 0)
                     Electorate.SetVitality(-1);
                 break;
             case 2:
                 // Software Update
                 Entity UkPlc = GameObject.Find("UK PLC(Clone)").GetComponent<Entity>();
-                if (UkPlc.hasAuthority)
-                    UkPlc.SetVitality(-2);
+                if (UkPlc.hasAuthority && UkPlc.Resources > 1)
+                    UkPlc.SetResources(-2);
+                else if (UkPlc.hasAuthority && UkPlc.Resources == 1)
+                    UkPlc.SetResources(-1);
                 break;
             case 5:
                 // Lax Opsec
                 Entity RussainGov = GameObject.Find("Russian Government(Clone)").GetComponent<Entity>();
                 if (RussainGov.hasAuthority)
                 {
-                    RussainGov.SetResources(-1);
-                    RussainGov.SetVitality(-1);
+                    if (RussainGov.Resources > 0)
+                        RussainGov.SetResources(-1);
+                    if (RussainGov.Vitality > 0)
+                        RussainGov.SetVitality(-1);
                 }
                 break;
             case 7:

@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1853909136645170089}
   - component: {fileID: 1853909136645170090}
   - component: {fileID: 5518738967378346878}
-  m_Layer: 0
+  - component: {fileID: 1099780170045660781}
+  m_Layer: 5
   m_Name: UK Energy
   m_TagString: Entity
   m_Icon: {fileID: 0}
@@ -38,7 +39,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -44}
+  m_AnchoredPosition: {x: 170, y: -26.3}
   m_SizeDelta: {x: 80, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1853909136645170095
@@ -90,6 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3984a70e43106b84da35469ec4b48c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
   infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0
@@ -130,6 +133,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1099780170045660781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853909136645170085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: cc94448094d831e4992385c8ca4aeaa4
+  hasSpawned: 0
 --- !u!1 &5518738965993934784
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,107 +21,124 @@ public class BlackMarketItem : NetworkBehaviour
     [SyncVar]
     string LastBid;
     // id to store item effects
+    [SyncVar]
     public int id;
-    Announcement text;
     Text BidText;
+    [SyncVar]
     public int MinBid;
 
-    private void Start()
+    public void Load()
     {
         manager = FindObjectOfType<GameManager>();
-        text = transform.GetChild(3).GetComponent<Announcement>();
         BidText = transform.GetChild(4).GetComponent<Text>();
         BidText.text = ("Min bid: " + MinBid);
-        BidAmount = MinBid - 1;
     }
 
-    [Command]
+    private void OnEnable()
+    {
+        if (active)
+            BidText.text = ("Current bid " + BidAmount);
+    }
+
+    [Server]
     public void TurnUpdate()
     {
-        RpcTurnUpdate();
-    }
-
-    void RpcTurnUpdate()
-    {
-        int turn = manager.Turns;
-        if (active & (turn != BidTurn))
+        manager = FindObjectOfType<GameManager>();
+        if (active & (manager.Turns != BidTurn))
         {
-            if (LastBid == "Player")
-            {
-                Debug.Log("Player won");
-                Destroy(gameObject);
-                transform.parent.GetComponent<BlackMarket>().BuyItem(gameObject);
-            }
-            else
-            {
-                Debug.Log("Enemy won");
-                Destroy(gameObject);
-                transform.parent.GetComponent<BlackMarket>().BuyItem(gameObject);
-            }
+            Debug.Log("Auction ended");
+            Destroy(gameObject);
+            FindObjectOfType<BlackMarket>(true).BuyItem(gameObject);
+            RpcEndAuction();
         }
     }
 
-    public void Bid()
+    [ClientRpc]
+    void RpcEndAuction()
     {
-        int NewBid = int.Parse(transform.GetChild(0).GetComponent<InputField>().text);
+        Destroy(gameObject);
+        transform.parent.GetComponent<BlackMarket>().BuyItem(gameObject);
+    }
+
+    [Server]
+    public void Bid(int NewBid)
+    {
+        manager = FindObjectOfType<GameManager>();
+        //int NewBid = int.Parse(transform.GetChild(0).GetComponent<InputField>().text);
         if (NewBid > BidAmount)
         {
             if (manager.PlayerTurn)
             {
                 if (GameObject.Find("GCHQ(Clone)").GetComponent<Entity>().Resources >= NewBid)
                 {
+                    active = true;
                     BidAmount = NewBid;
-                    CmdBid(NewBid);
-                    transform.GetChild(0).GetComponent<InputField>().text = "";
-                    text.SetText("You are the highest bidder");
+                    BidTurn = manager.Turns;
+                    LastBid = "Player";
+                    RpcAlertText(1, NewBid);
+                    RpcBidText();
                 }
                 else
-                    text.SetText("Not enough resources to bid");
+                    RpcAlertText(0, NewBid);
             }
             else
             {
                 if (GameObject.Find("SCS(Clone)").GetComponent<Entity>().Resources >= NewBid)
                 {
                     if (GameObject.Find("EventCard(Clone)") && GameObject.Find("EventCard(Clone)").GetComponent<EventCard>().card == 4)
-                        text.SetText("Russia has been embargoed this month");
+                        RpcAlertText(2, NewBid);
                     else
                     {
+                        active = true;
                         BidAmount = NewBid;
-                        CmdBid(NewBid);
-                        transform.GetChild(0).GetComponent<InputField>().text = "";
-                        text.SetText("You are the highest bidder");
+                        BidTurn = manager.Turns;
+                        LastBid = "Enemy";
+                        RpcAlertText(1, NewBid);
+                        RpcBidText();
                     }
                 }
                 else
-                    text.SetText("Not enough resources to bid");
+                    RpcAlertText(0, NewBid);
             }
         }
         else
-            text.SetText("You need to bid more than " + BidAmount);
+            RpcAlertText(3, NewBid);
     }
 
-    void CmdBid(int bid)
+    [ClientRpc]
+    void RpcAlertText(int i, int NewBid)
     {
-        SvrBid(bid);
-    }
-
-    [Server]
-    void SvrBid(int bid)
-    {
-        Debug.Log("CALLED");
-        active = true;
-        BidAmount = bid;
-        BidTurn = manager.Turns;
-        if (manager.PlayerTurn)
-            LastBid = "Player";
-        else
-            LastBid = "Enemy";
-        RpcBidText();
+        switch (i)
+        {
+            case 0:
+                transform.GetChild(3).GetComponent<Announcement>().SetText("Not enough resources to bid");
+                break;
+            case 1:
+                transform.GetChild(3).GetComponent<Announcement>().SetText("You are the highest bidder");
+                if (manager.PlayerTurn && manager.player.hasAuthority)
+                    GameObject.Find("GCHQ(Clone)").GetComponent<Entity>().SetResources(-NewBid);
+                else if (!manager.PlayerTurn && manager.enemy.hasAuthority)
+                    GameObject.Find("SCS(Clone)").GetComponent<Entity>().SetResources(-NewBid);
+                break;
+            case 2:
+                transform.GetChild(3).GetComponent<Announcement>().SetText("Russia has been embargoed this month");
+                break;
+            case 3:
+                transform.GetChild(3).GetComponent<Announcement>().SetText("You need to bid more than " + BidAmount);
+                break;
+        }
     }
 
     [ClientRpc]
     void RpcBidText()
     {
+        StartCoroutine(ChangeText());
+        ChangeText();
+    }
+
+    IEnumerator ChangeText()
+    {
+        yield return new WaitForSeconds(0.1f);
         BidText.text = ("Current bid " + BidAmount);
     }
 }

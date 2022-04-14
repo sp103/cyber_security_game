@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +13,10 @@ public class NumInput : MonoBehaviour
     public Entity fromEntity;
     public int num = 0;
     public Slider AttackSlider;
-    public Sprite[] images = new Sprite[6];
+    public Sprite[] attackImages = new Sprite[6];
+    public Sprite[] vitalityImages = new Sprite[6];
     public GameObject reportScreen;
+    int[] vitality = {1, 2, 4, 5, 6, 7};
 
     //public void Hide()
     //{
@@ -41,6 +44,22 @@ public class NumInput : MonoBehaviour
         entity = NewEntity;
         function = func;
         transform.GetChild(3).GetComponent<Text>().text = ("Revitalising " + NewEntity.name);
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(5).gameObject.SetActive(true);
+        transform.GetChild(6).gameObject.SetActive(true);
+        transform.GetChild(6).GetComponent<Image>().sprite = vitalityImages[(int)AttackSlider.value];
+        int resources = entity.Resources;
+        if (entity.discount)
+            resources += 1;
+        if (resources == 3)
+            AttackSlider.maxValue = 1;
+        else if (resources < 1)
+            AttackSlider.maxValue = 0;
+        else if (resources > 7)
+            AttackSlider.maxValue = 5;
+        else
+            AttackSlider.maxValue = Array.IndexOf(vitality, resources);
+            //get index from value
         transform.GetChild(4).GetComponent<Text>().text = (entity.Resources + " resources available");
     }
 
@@ -56,7 +75,7 @@ public class NumInput : MonoBehaviour
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(5).gameObject.SetActive(true);
             transform.GetChild(6).gameObject.SetActive(true);
-            transform.GetChild(6).GetComponent<Image>().sprite = images[(int)AttackSlider.value];
+            transform.GetChild(6).GetComponent<Image>().sprite = attackImages[(int)AttackSlider.value];
             if (from.Resources > 0 && from.Resources < 7)
                 AttackSlider.maxValue = from.Resources - 1;
             else if (from.Resources == 0)
@@ -71,7 +90,7 @@ public class NumInput : MonoBehaviour
     {
         if (function == "revitalise")
         {
-            entity.Revitalise(int.Parse(input.text));
+            entity.Revitalise(vitality[(int)AttackSlider.value]);
         }
         else if (function == "transfer")
         {
@@ -90,7 +109,10 @@ public class NumInput : MonoBehaviour
 
     void SliderValue()
     {
-        transform.GetChild(6).GetComponent<Image>().sprite = images[(int)AttackSlider.value];
+        if (function == "attack")
+            transform.GetChild(6).GetComponent<Image>().sprite = attackImages[(int)AttackSlider.value];
+        else
+            transform.GetChild(6).GetComponent<Image>().sprite = vitalityImages[(int)AttackSlider.value];
     }
 
     public void DestroyScreen()

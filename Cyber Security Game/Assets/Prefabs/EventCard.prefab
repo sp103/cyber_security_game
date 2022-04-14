@@ -91,16 +91,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 692aabc5eefb5d144b601c75e1885c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   cardImages:
-  - {fileID: -1241312089722089939, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: -2401971614038923002, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: -2758097627610394055, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: -284944419398838749, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: 1666586832504827644, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: 6849849581309430884, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: 5942755996138698215, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: 1155636262705741951, guid: 4e8cc576948caf44790a86270bab20ce, type: 3}
-  - {fileID: 21300000, guid: 77791dd194cfc6949a2be09e0f20a812, type: 3}
+  - {fileID: 9196735430300305442, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: 5998698082563031889, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: 4616885988904033550, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: 113371066552732281, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: 4015147274814791217, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: -8853831255799603142, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: -6150416138588862681, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: 1923452735882353608, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
+  - {fileID: 7220858098090169580, guid: 88ea05e4897ae2c458c9cfc56e27f95a, type: 3}
   maximised: 0
   card: 8
 --- !u!114 &1477161622339551417

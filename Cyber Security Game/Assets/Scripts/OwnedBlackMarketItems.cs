@@ -15,14 +15,9 @@ public class OwnedBlackMarketItems : MonoBehaviour
     public GameObject EnemyItems;
     public GameManager manager;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        manager = FindObjectOfType<GameManager>();
-    }
-
     public void OnEnable()
     {
+        manager = FindObjectOfType<GameManager>();
         if (manager.PlayerTurn)
         {
             EnemyItems.SetActive(false);
@@ -40,6 +35,7 @@ public class OwnedBlackMarketItems : MonoBehaviour
 
     public void AddItem(int ItemID)
     {
+        manager = FindObjectOfType<GameManager>();
         if (!manager.PlayerTurn)
         {
             PlayerHeight += 210;

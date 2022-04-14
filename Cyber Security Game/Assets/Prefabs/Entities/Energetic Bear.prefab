@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 5329467775614241416}
   - component: {fileID: 5329467775614241527}
   - component: {fileID: 200037049967191587}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Energetic Bear
   m_TagString: Entity
   m_Icon: {fileID: 0}
@@ -248,6 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3984a70e43106b84da35469ec4b48c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   numInput: {fileID: 1191364614569119708, guid: 0ec247e852fe3f74eaa80ddb3035adce, type: 3}
   infoScreen: {fileID: 4570190179182470091, guid: fb1632c97155fbf46bb6bdb48b84e952, type: 3}
   Vitality: 0

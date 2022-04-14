@@ -20,7 +20,7 @@ public class InfoScreen : MonoBehaviour
     {
         int entityID = Array.FindIndex(entities, row => row.Contains(entity));
         GameManager manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        GetComponent<Image>().sprite = infoImg[entityID];
+        transform.GetChild(0).GetComponent<Image>().sprite = infoImg[entityID];
         Instantiate(canvas, new Vector3(0, 0, 0), Quaternion.identity);
     }
 }
